@@ -72,19 +72,6 @@ const createAndUpdateValidation = [
       return Array.isArray(value) && value.length > 0;
     })
     .withMessage('cast must be a non-empty array'),
-  body('cast.*')
-    .custom((value) => {
-      if (typeof value === 'string') {
-        try {
-          const parsed = JSON.parse(value);
-          return Array.isArray(parsed) && parsed.every(v => typeof v === 'string' && v.trim().length > 0);
-        } catch (e) {
-          return false;
-        }
-      }
-      return typeof value === 'string' && value.trim().length > 0;
-    })
-    .withMessage('cast entries must be non-empty strings'),
   body('country').trim().notEmpty().withMessage('country is required'),
   body('filmingLocation').trim().notEmpty().withMessage('filmingLocation is required'),
   body('summary').trim().notEmpty().withMessage('summary is required'),

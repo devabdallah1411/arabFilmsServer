@@ -3,6 +3,10 @@ const { uploadToCloudinary } = require('../utils/cloudinary');
 
 exports.createWork = async (req, res, next) => {
   try {
+    // تنظيف مصفوفة cast قبل الإنشاء
+    if (Array.isArray(req.body.cast)) {
+      req.body.cast = req.body.cast.filter(actor => typeof actor === 'string' && actor.trim() !== '');
+    }
     const work = await Work.create(req.body);
     res.status(201).json(work);
   } catch (error) {
@@ -40,6 +44,10 @@ exports.createWorkWithImage = async (req, res, next) => {
       } catch (e) {
         return res.status(400).json({ message: 'Invalid cast format' });
       }
+    }
+    // تنظيف مصفوفة cast
+    if (Array.isArray(cast)) {
+      cast = cast.filter(actor => typeof actor === 'string' && actor.trim() !== '');
     }
 
     // Create work with the poster URL
