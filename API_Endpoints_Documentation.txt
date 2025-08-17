@@ -1,0 +1,584 @@
+================================================================================
+                    ARAB FILM BACKEND API - ENDPOINTS DOCUMENTATION
+================================================================================
+
+📋 BASE URL: http://https://arabfilmsserver.onrender.com
+📋 Content-Type: application/json (unless specified otherwise)
+📋 Authentication: Bearer Token (where required)
+
+================================================================================
+                                📋 ALL ENDPOINTS SUMMARY
+================================================================================
+
+🔐 USER ENDPOINTS (4 endpoints):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1️⃣ POST   /api/users/signup                    - إنشاء حساب مستخدم جديد
+2️⃣ POST   /api/users/signin                    - تسجيل دخول المستخدم
+3️⃣ POST   /api/users/forgot-password           - طلب إعادة تعيين كلمة المرور
+4️⃣ POST   /api/users/reset-password/:token     - إعادة تعيين كلمة المرور
+
+🎬 WORK ENDPOINTS (6 endpoints):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1️⃣ POST   /api/works                           - إنشاء عمل فني بدون صورة
+2️⃣ POST   /api/works/with-image                - إنشاء عمل فني مع صورة
+3️⃣ GET    /api/works                           - جلب جميع الأعمال الفنية
+4️⃣ GET    /api/works/:id                       - جلب عمل فني محدد
+5️⃣ PATCH  /api/works/:id                       - تحديث عمل فني محدد
+6️⃣ DELETE /api/works/:id                       - حذف عمل فني محدد
+
+📤 UPLOAD ENDPOINTS (1 endpoint):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1️⃣ POST   /api/upload/image                    - رفع صورة واحدة
+
+📊 TOTAL: 11 ENDPOINTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+================================================================================
+                                📋 DETAILED ENDPOINTS
+================================================================================
+
+================================================================================
+                                🔐 USER ENDPOINTS
+================================================================================
+
+📍 BASE PATH: /api/users
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1️⃣ REGISTER USER (SIGNUP)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 METHOD: POST
+🔗 URL: /api/users/signup
+📝 DESCRIPTION: إنشاء حساب مستخدم جديد
+
+📤 REQUEST BODY:
+{
+  "username": "اسم المستخدم",     // مطلوب - فريد
+  "email": "user@example.com",    // مطلوب - فريد - صيغة إيميل صحيحة
+  "password": "كلمة المرور"       // مطلوب - 6 أحرف على الأقل
+}
+
+📥 SUCCESS RESPONSE (201):
+{
+  "message": "User registered successfully"
+}
+
+❌ ERROR RESPONSES:
+- 400: "Email already in use"
+- 400: Validation errors
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+2️⃣ LOGIN USER (SIGNIN)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 METHOD: POST
+🔗 URL: /api/users/signin
+📝 DESCRIPTION: تسجيل دخول المستخدم
+
+📤 REQUEST BODY:
+{
+  "email": "user@example.com",    // مطلوب
+  "password": "كلمة المرور"       // مطلوب
+}
+
+📥 SUCCESS RESPONSE (200):
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": "64f8a1b2c3d4e5f6a7b8c9d0",
+    "username": "اسم المستخدم",
+    "email": "user@example.com"
+  }
+}
+
+❌ ERROR RESPONSES:
+- 400: "Invalid credentials"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+3️⃣ FORGOT PASSWORD
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 METHOD: POST
+🔗 URL: /api/users/forgot-password
+📝 DESCRIPTION: طلب إعادة تعيين كلمة المرور
+
+📤 REQUEST BODY:
+{
+  "email": "user@example.com"     // مطلوب
+}
+
+📥 SUCCESS RESPONSE (200):
+{
+  "message": "Password reset link sent to email"
+}
+
+❌ ERROR RESPONSES:
+- 404: "No user found with that email"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+4️⃣ RESET PASSWORD
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 METHOD: POST
+🔗 URL: /api/users/reset-password/:token
+📝 DESCRIPTION: إعادة تعيين كلمة المرور باستخدام التوكن
+
+📤 REQUEST BODY:
+{
+  "newPassword": "كلمة المرور الجديدة"  // مطلوب - 6 أحرف على الأقل
+}
+
+📥 SUCCESS RESPONSE (200):
+{
+  "message": "Password has been reset successfully"
+}
+
+❌ ERROR RESPONSES:
+- 400: "Token is invalid or has expired"
+
+================================================================================
+                                🎬 WORK ENDPOINTS
+================================================================================
+
+📍 BASE PATH: /api/works
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1️⃣ CREATE WORK (WITHOUT IMAGE)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 METHOD: POST
+🔗 URL: /api/works
+📝 DESCRIPTION: إنشاء عمل فني جديد (فيلم أو مسلسل) بدون صورة
+
+📤 REQUEST BODY:
+{
+  "type": "film",                 // مطلوب: "film" أو "series"
+  "nameArabic": "اسم العمل بالعربية",     // مطلوب
+  "nameEnglish": "Work Name in English",  // مطلوب
+  "year": 2024,                   // مطلوب: رقم بين 1800-3000
+  "director": "اسم المخرج",       // مطلوب
+  "assistantDirector": "اسم المخرج المساعد", // مطلوب
+  "genre": "نوع العمل",           // مطلوب
+  "cast": ["الممثل الأول", "الممثلة الثانية"], // مطلوب: مصفوفة غير فارغة
+  "country": "البلد",             // مطلوب
+  "filmingLocation": "موقع التصوير", // مطلوب
+  "summary": "ملخص العمل",        // مطلوب
+  "posterUrl": "https://example.com/poster.jpg", // اختياري
+  "seasonsCount": 2,              // مطلوب للمسلسلات فقط
+  "episodesCount": 24             // مطلوب للمسلسلات فقط
+}
+
+📥 SUCCESS RESPONSE (201):
+{
+  "_id": "64f8a1b2c3d4e5f6a7b8c9d0",
+  "type": "film",
+  "nameArabic": "اسم العمل بالعربية",
+  "nameEnglish": "Work Name in English",
+  "year": 2024,
+  "director": "اسم المخرج",
+  "assistantDirector": "اسم المخرج المساعد",
+  "genre": "نوع العمل",
+  "cast": ["الممثل الأول", "الممثلة الثانية"],
+  "country": "البلد",
+  "filmingLocation": "موقع التصوير",
+  "summary": "ملخص العمل",
+  "posterUrl": "https://example.com/poster.jpg",
+  "seasonsCount": 2,              // موجود فقط للمسلسلات
+  "episodesCount": 24,            // موجود فقط للمسلسلات
+  "createdAt": "2024-01-15T10:30:00.000Z",
+  "updatedAt": "2024-01-15T10:30:00.000Z"
+}
+
+❌ ERROR RESPONSES:
+- 400: Validation errors array
+- 500: Server error
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+2️⃣ CREATE WORK (WITH IMAGE)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 METHOD: POST
+🔗 URL: /api/works/with-image
+📝 DESCRIPTION: إنشاء عمل فني جديد مع رفع صورة
+📋 CONTENT-TYPE: multipart/form-data
+
+📤 REQUEST BODY (FormData):
+- image: [File]                   // مطلوب: ملف صورة
+- type: "film"                    // مطلوب: "film" أو "series"
+- nameArabic: "اسم العمل بالعربية" // مطلوب
+- nameEnglish: "Work Name in English" // مطلوب
+- year: "2024"                    // مطلوب: رقم بين 1800-3000
+- director: "اسم المخرج"          // مطلوب
+- assistantDirector: "اسم المخرج المساعد" // مطلوب
+- genre: "نوع العمل"              // مطلوب
+- cast: '["الممثل الأول", "الممثلة الثانية"]' // مطلوب: JSON string
+- country: "البلد"                // مطلوب
+- filmingLocation: "موقع التصوير" // مطلوب
+- summary: "ملخص العمل"           // مطلوب
+- posterUrl: "https://example.com/poster.jpg" // اختياري
+- seasonsCount: "2"               // مطلوب للمسلسلات فقط
+- episodesCount: "24"             // مطلوب للمسلسلات فقط
+
+📋 IMAGE REQUIREMENTS:
+- Types: jpeg, jpg, png, gif, webp
+- Max Size: 5MB
+- Field Name: "image"
+
+📥 SUCCESS RESPONSE (201):
+{
+  "_id": "64f8a1b2c3d4e5f6a7b8c9d0",
+  "type": "film",
+  "nameArabic": "اسم العمل بالعربية",
+  "nameEnglish": "Work Name in English",
+  "year": 2024,
+  "director": "اسم المخرج",
+  "assistantDirector": "اسم المخرج المساعد",
+  "genre": "نوع العمل",
+  "cast": ["الممثل الأول", "الممثلة الثانية"],
+  "country": "البلد",
+  "filmingLocation": "موقع التصوير",
+  "summary": "ملخص العمل",
+  "posterUrl": "https://res.cloudinary.com/...", // Cloudinary URL
+  "seasonsCount": 2,              // موجود فقط للمسلسلات
+  "episodesCount": 24,            // موجود فقط للمسلسلات
+  "createdAt": "2024-01-15T10:30:00.000Z",
+  "updatedAt": "2024-01-15T10:30:00.000Z"
+}
+
+❌ ERROR RESPONSES:
+- 400: "Either image file or posterUrl must be provided"
+- 400: "File too large. Maximum size is 5MB."
+- 400: "Only image files are allowed!"
+- 400: Validation errors array
+- 500: Server error
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+3️⃣ GET ALL WORKS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 METHOD: GET
+🔗 URL: /api/works
+📝 DESCRIPTION: جلب جميع الأعمال الفنية مرتبة حسب تاريخ الإنشاء (الأحدث أولاً)
+
+📤 REQUEST: No body required
+
+📥 SUCCESS RESPONSE (200):
+[
+  {
+    "_id": "64f8a1b2c3d4e5f6a7b8c9d0",
+    "type": "film",
+    "nameArabic": "اسم العمل بالعربية",
+    "nameEnglish": "Work Name in English",
+    "year": 2024,
+    "director": "اسم المخرج",
+    "assistantDirector": "اسم المخرج المساعد",
+    "genre": "نوع العمل",
+    "cast": ["الممثل الأول", "الممثلة الثانية"],
+    "country": "البلد",
+    "filmingLocation": "موقع التصوير",
+    "summary": "ملخص العمل",
+    "posterUrl": "https://res.cloudinary.com/...",
+    "seasonsCount": 2,            // موجود فقط للمسلسلات
+    "episodesCount": 24,          // موجود فقط للمسلسلات
+    "createdAt": "2024-01-15T10:30:00.000Z",
+    "updatedAt": "2024-01-15T10:30:00.000Z"
+  },
+  // ... more works
+]
+
+❌ ERROR RESPONSES:
+- 500: Server error
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+4️⃣ GET WORK BY ID
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 METHOD: GET
+🔗 URL: /api/works/:id
+📝 DESCRIPTION: جلب عمل فني محدد بواسطة الـ ID
+
+📤 REQUEST: No body required
+📋 PARAMETERS: id (MongoDB ObjectId)
+
+📥 SUCCESS RESPONSE (200):
+{
+  "_id": "64f8a1b2c3d4e5f6a7b8c9d0",
+  "type": "film",
+  "nameArabic": "اسم العمل بالعربية",
+  "nameEnglish": "Work Name in English",
+  "year": 2024,
+  "director": "اسم المخرج",
+  "assistantDirector": "اسم المخرج المساعد",
+  "genre": "نوع العمل",
+  "cast": ["الممثل الأول", "الممثلة الثانية"],
+  "country": "البلد",
+  "filmingLocation": "موقع التصوير",
+  "summary": "ملخص العمل",
+  "posterUrl": "https://res.cloudinary.com/...",
+  "seasonsCount": 2,              // موجود فقط للمسلسلات
+  "episodesCount": 24,            // موجود فقط للمسلسلات
+  "createdAt": "2024-01-15T10:30:00.000Z",
+  "updatedAt": "2024-01-15T10:30:00.000Z"
+}
+
+❌ ERROR RESPONSES:
+- 400: "Invalid work id"
+- 404: "Work not found"
+- 500: Server error
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+5️⃣ UPDATE WORK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 METHOD: PATCH
+🔗 URL: /api/works/:id
+📝 DESCRIPTION: تحديث عمل فني محدد
+
+📤 REQUEST BODY (Partial - يمكن إرسال الحقول المراد تحديثها فقط):
+{
+  "nameArabic": "الاسم الجديد بالعربية",  // اختياري
+  "nameEnglish": "New English Name",      // اختياري
+  "year": 2025,                           // اختياري
+  "director": "اسم المخرج الجديد",        // اختياري
+  "assistantDirector": "اسم المخرج المساعد الجديد", // اختياري
+  "genre": "النوع الجديد",                // اختياري
+  "cast": ["الممثل الجديد", "الممثلة الجديدة"], // اختياري
+  "country": "البلد الجديد",              // اختياري
+  "filmingLocation": "موقع التصوير الجديد", // اختياري
+  "summary": "الملخص الجديد",             // اختياري
+  "posterUrl": "https://example.com/new-poster.jpg", // اختياري
+  "seasonsCount": 3,                      // اختياري للمسلسلات
+  "episodesCount": 30                     // اختياري للمسلسلات
+}
+
+📋 PARAMETERS: id (MongoDB ObjectId)
+
+📥 SUCCESS RESPONSE (200):
+{
+  "_id": "64f8a1b2c3d4e5f6a7b8c9d0",
+  "type": "film",
+  "nameArabic": "الاسم الجديد بالعربية",
+  "nameEnglish": "New English Name",
+  "year": 2025,
+  "director": "اسم المخرج الجديد",
+  "assistantDirector": "اسم المخرج المساعد الجديد",
+  "genre": "النوع الجديد",
+  "cast": ["الممثل الجديد", "الممثلة الجديدة"],
+  "country": "البلد الجديد",
+  "filmingLocation": "موقع التصوير الجديد",
+  "summary": "الملخص الجديد",
+  "posterUrl": "https://example.com/new-poster.jpg",
+  "seasonsCount": 3,                      // موجود فقط للمسلسلات
+  "episodesCount": 30,                    // موجود فقط للمسلسلات
+  "createdAt": "2024-01-15T10:30:00.000Z",
+  "updatedAt": "2024-01-15T11:45:00.000Z"
+}
+
+❌ ERROR RESPONSES:
+- 400: "Invalid work id"
+- 400: Validation errors array
+- 404: "Work not found"
+- 500: Server error
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+6️⃣ DELETE WORK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 METHOD: DELETE
+🔗 URL: /api/works/:id
+📝 DESCRIPTION: حذف عمل فني محدد
+
+📤 REQUEST: No body required
+📋 PARAMETERS: id (MongoDB ObjectId)
+
+📥 SUCCESS RESPONSE (204): No content
+
+❌ ERROR RESPONSES:
+- 400: "Invalid work id"
+- 404: "Work not found"
+- 500: Server error
+
+================================================================================
+                                📤 UPLOAD ENDPOINTS
+================================================================================
+
+📍 BASE PATH: /api/upload
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1️⃣ UPLOAD SINGLE IMAGE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 METHOD: POST
+🔗 URL: /api/upload/image
+📝 DESCRIPTION: رفع صورة واحدة إلى Cloudinary
+📋 CONTENT-TYPE: multipart/form-data
+
+📤 REQUEST BODY (FormData):
+- image: [File]                   // مطلوب: ملف صورة
+
+📋 IMAGE REQUIREMENTS:
+- Types: jpeg, jpg, png, gif, webp
+- Max Size: 5MB
+- Field Name: "image"
+
+📥 SUCCESS RESPONSE (200):
+{
+  "message": "Image uploaded successfully",
+  "data": {
+    "public_id": "arabfilm/posters/image-1234567890",
+    "secure_url": "https://res.cloudinary.com/your-cloud/image/upload/v1234567890/arabfilm/posters/image-1234567890.jpg"
+  }
+}
+
+❌ ERROR RESPONSES:
+- 400: "No file uploaded"
+- 400: "File too large. Maximum size is 5MB."
+- 400: "Only image files are allowed!"
+- 500: Server error
+
+================================================================================
+                                🔧 ERROR HANDLING
+================================================================================
+
+📋 VALIDATION ERROR FORMAT:
+{
+  "errors": [
+    {
+      "type": "field",
+      "value": "",
+      "msg": "nameArabic is required",
+      "path": "nameArabic",
+      "location": "body"
+    }
+  ]
+}
+
+📋 GENERAL ERROR FORMAT:
+{
+  "message": "Error description"
+}
+
+📋 COMMON ERROR CODES:
+- 400: Bad Request (validation errors, invalid data)
+- 401: Unauthorized (authentication required)
+- 404: Not Found (resource not found)
+- 500: Internal Server Error (server error)
+
+================================================================================
+                                🔐 AUTHENTICATION
+================================================================================
+
+📋 JWT TOKEN FORMAT:
+Authorization: Bearer <token>
+
+📋 TOKEN EXPIRY: 1 day (24 hours)
+
+📋 TOKEN USAGE:
+- Include in request headers for protected routes
+- Token is returned after successful login
+- Token contains user ID for identification
+
+================================================================================
+                                📝 NOTES FOR FRONTEND
+================================================================================
+
+🔹 FOR FILE UPLOADS:
+- Use FormData for multipart/form-data requests
+- Don't set Content-Type header manually for file uploads
+- Handle file size and type validation on frontend
+
+🔹 FOR CAST ARRAY:
+- Can be sent as JSON array or JSON string
+- Must be non-empty array of strings
+- Each cast member must be non-empty string
+
+🔹 FOR SERIES VS FILMS:
+- seasonsCount and episodesCount are required only for series
+- type field determines which fields are required
+
+🔹 FOR IMAGES:
+- Cloudinary URLs are returned for uploaded images
+- Images are stored in 'arabfilm/posters' folder
+- Secure HTTPS URLs are provided
+
+🔹 FOR ERROR HANDLING:
+- Always check response status before parsing JSON
+- Handle validation errors array format
+- Provide user-friendly error messages
+
+🔹 FOR PAGINATION:
+- Currently no pagination implemented
+- All works are returned in single request
+- Sorted by createdAt (newest first)
+
+================================================================================
+                                🧪 TESTING EXAMPLES
+================================================================================
+
+📋 USING POSTMAN:
+
+1️⃣ Register User:
+POST http://https://arabfilmsserver.onrender.com/api/users/signup
+Body (JSON):
+{
+  "username": "testuser",
+  "email": "test@example.com",
+  "password": "123456"
+}
+
+2️⃣ Login User:
+POST http://https://arabfilmsserver.onrender.com/api/users/signin
+Body (JSON):
+{
+  "email": "test@example.com",
+  "password": "123456"
+}
+
+3️⃣ Create Work:
+POST http://https://arabfilmsserver.onrender.com/api/works
+Body (JSON):
+{
+  "type": "film",
+  "nameArabic": "فيلم تجريبي",
+  "nameEnglish": "Test Film",
+  "year": 2024,
+  "director": "مخرج تجريبي",
+  "assistantDirector": "مخرج مساعد تجريبي",
+  "genre": "دراما",
+  "cast": ["ممثل أول", "ممثلة ثانية"],
+  "country": "مصر",
+  "filmingLocation": "القاهرة",
+  "summary": "ملخص تجريبي للفيلم"
+}
+
+4️⃣ Upload Image:
+POST http://https://arabfilmsserver.onrender.com/api/upload/image
+Body (Form-data):
+- image: [select file]
+
+5️⃣ Create Work with Image:
+POST http://https://arabfilmsserver.onrender.com/api/works/with-image
+Body (Form-data):
+- image: [select file]
+- type: "film"
+- nameArabic: "فيلم مع صورة"
+- nameEnglish: "Film with Image"
+- year: "2024"
+- director: "مخرج تجريبي"
+- assistantDirector: "مخرج مساعد تجريبي"
+- genre: "دراما"
+- cast: '["ممثل أول", "ممثلة ثانية"]'
+- country: "مصر"
+- filmingLocation: "القاهرة"
+- summary: "ملخص تجريبي للفيلم"
+
+================================================================================
+                                📞 SUPPORT
+================================================================================
+
+📧 For any questions or issues, please refer to the backend documentation
+🔗 Base URL: http://https://arabfilmsserver.onrender.com/api
+📋 All endpoints return JSON responses
+🔐 Authentication required for protected routes
+
+================================================================================

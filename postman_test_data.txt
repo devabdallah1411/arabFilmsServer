@@ -1,0 +1,329 @@
+==========================================
+ARAB FILM BACKEND - POSTMAN TEST DATA
+==========================================
+
+BASE URL: https://arabfilmsserver.onrender.com
+
+==========================================
+0. UPLOAD IMAGE (POST /api/upload/image)
+==========================================
+URL: POST https://arabfilmsserver.onrender.com/api/upload/image
+Headers: None (Postman will set Content-Type automatically for form-data)
+
+Body: form-data
+Key: image (Type: File)
+Value: Select an image file from your computer (JPG, PNG, GIF, WEBP)
+
+Expected Response: 200 OK
+Response will contain:
+{
+  "message": "Image uploaded successfully",
+  "data": {
+    "public_id": "arabfilm/posters/image-1234567890",
+    "secure_url": "https://res.cloudinary.com/your-cloud/image/upload/v123/arabfilm/posters/image-1234567890.jpg"
+  }
+}
+
+Use the "secure_url" as posterUrl in your work creation requests.
+
+==========================================
+1. CREATE FILM (POST /api/works)
+==========================================
+URL: POST https://arabfilmsserver.onrender.com/api/works
+Headers: Content-Type: application/json
+
+Body (JSON):
+{
+  "type": "film",
+  "nameArabic": "فيلم تجريبي",
+  "nameEnglish": "Test Film",
+  "year": 2024,
+  "director": "Director Name",
+  "assistantDirector": "Assistant Name",
+  "genre": "Drama",
+  "cast": ["Actor One", "Actor Two"],
+  "country": "Egypt",
+  "filmingLocation": "Cairo",
+  "summary": "Film summary",
+  "posterUrl": "https://picsum.photos/600"
+}
+
+Expected Response: 201 Created
+Response will contain: _id, timestamps, and all submitted data
+
+==========================================
+1.5. CREATE FILM WITH IMAGE UPLOAD (POST /api/works/with-image)
+==========================================
+URL: POST https://arabfilmsserver.onrender.com/api/works/with-image
+Headers: None (Postman will set Content-Type automatically for form-data)
+
+Body: form-data
+Keys and Values:
+- type: film
+- nameArabic: فيلم تجريبي مع صورة
+- nameEnglish: Test Film with Image
+- year: 2024
+- director: Director Name
+- assistantDirector: Assistant Name
+- genre: Drama
+- cast: ["Actor One", "Actor Two"]
+- country: Egypt
+- filmingLocation: Cairo
+- summary: Film summary with uploaded image
+- image: [Select File] (Choose an image from your computer)
+
+Expected Response: 201 Created
+Response will contain: _id, timestamps, and all submitted data with Cloudinary URL for posterUrl
+
+==========================================
+2. CREATE SERIES (POST /api/works)
+==========================================
+URL: POST https://arabfilmsserver.onrender.com/api/works
+Headers: Content-Type: application/json
+
+Body (JSON):
+{
+  "type": "series",
+  "nameArabic": "مسلسل تجريبي",
+  "nameEnglish": "Test Series",
+  "year": 2023,
+  "director": "Series Director",
+  "assistantDirector": "Assistant Name",
+  "genre": "Action",
+  "cast": ["Actor A", "Actor B"],
+  "country": "Lebanon",
+  "filmingLocation": "Beirut",
+  "summary": "Series summary",
+  "posterUrl": "https://picsum.photos/601",
+  "seasonsCount": 2,
+  "episodesCount": 16
+}
+
+Expected Response: 201 Created
+Response will contain: _id, timestamps, seasonsCount, episodesCount, and all submitted data
+
+==========================================
+2.5. CREATE SERIES WITH IMAGE UPLOAD (POST /api/works/with-image)
+==========================================
+URL: POST https://arabfilmsserver.onrender.com/api/works/with-image
+Headers: None (Postman will set Content-Type automatically for form-data)
+
+Body: form-data
+Keys and Values:
+- type: series
+- nameArabic: مسلسل تجريبي مع صورة
+- nameEnglish: Test Series with Image
+- year: 2023
+- director: Series Director
+- assistantDirector: Assistant Name
+- genre: Action
+- cast: ["Actor A", "Actor B"]
+- country: Lebanon
+- filmingLocation: Beirut
+- summary: Series summary with uploaded image
+- seasonsCount: 2
+- episodesCount: 16
+- image: [Select File] (Choose an image from your computer)
+
+Expected Response: 201 Created
+Response will contain: _id, timestamps, seasonsCount, episodesCount, and all submitted data with Cloudinary URL for posterUrl
+
+==========================================
+3. GET ALL WORKS (GET /api/works)
+==========================================
+URL: GET https://arabfilmsserver.onrender.com/api/works
+Headers: None
+
+Expected Response: 200 OK
+Response will be an array of all works in the database
+
+==========================================
+4. GET WORK BY ID (GET /api/works/:id)
+==========================================
+URL: GET https://arabfilmsserver.onrender.com/api/works/{WORK_ID}
+Headers: None
+
+Replace {WORK_ID} with the _id from previous create requests
+
+Expected Response: 200 OK
+Response will contain the specific work data
+
+==========================================
+5. UPDATE WORK (PATCH /api/works/:id)
+==========================================
+URL: PATCH https://arabfilmsserver.onrender.com/api/works/{WORK_ID}
+Headers: Content-Type: application/json
+
+Body (JSON):
+{
+  "nameEnglish": "Updated Title"
+}
+
+Expected Response: 200 OK
+Response will contain the updated work data
+
+==========================================
+6. DELETE WORK (DELETE /api/works/:id)
+==========================================
+URL: DELETE https://arabfilmsserver.onrender.com/api/works/{WORK_ID}
+Headers: None
+
+Expected Response: 204 No Content
+
+==========================================
+7. INVALID SERIES (Missing Required Fields)
+==========================================
+URL: POST https://arabfilmsserver.onrender.com/api/works
+Headers: Content-Type: application/json
+
+Body (JSON):
+{
+  "type": "series",
+  "nameArabic": "مسلسل ناقص",
+  "nameEnglish": "Missing Series",
+  "year": 2022,
+  "director": "Dir",
+  "assistantDirector": "AD",
+  "genre": "Comedy",
+  "cast": ["A"],
+  "country": "KSA",
+  "filmingLocation": "Riyadh",
+  "summary": "...",
+  "posterUrl": "https://picsum.photos/602"
+}
+
+Expected Response: 400 Bad Request
+Response will contain validation errors for missing seasonsCount and episodesCount
+
+==========================================
+8. INVALID WORK TYPE
+==========================================
+URL: POST https://arabfilmsserver.onrender.com/api/works
+Headers: Content-Type: application/json
+
+Body (JSON):
+{
+  "type": "invalid_type",
+  "nameArabic": "نوع خاطئ",
+  "nameEnglish": "Wrong Type",
+  "year": 2024,
+  "director": "Dir",
+  "assistantDirector": "AD",
+  "genre": "Drama",
+  "cast": ["Actor"],
+  "country": "Egypt",
+  "filmingLocation": "Cairo",
+  "summary": "Test",
+  "posterUrl": "https://picsum.photos/603"
+}
+
+Expected Response: 400 Bad Request
+Response will contain validation error for invalid type
+
+==========================================
+9. INVALID ID FORMAT
+==========================================
+URL: GET https://arabfilmsserver.onrender.com/api/works/invalid_id
+Headers: None
+
+Expected Response: 400 Bad Request
+Response will contain validation error for invalid MongoDB ID format
+
+==========================================
+10. NON-EXISTENT WORK
+==========================================
+URL: GET https://arabfilmsserver.onrender.com/api/works/507f1f77bcf86cd799439011
+Headers: None
+
+Expected Response: 404 Not Found
+Response will contain: {"message": "Work not found"}
+
+==========================================
+11. UPLOAD INVALID FILE TYPE
+==========================================
+URL: POST https://arabfilmsserver.onrender.com/api/upload/image
+Headers: None
+
+Body: form-data
+Key: image (Type: File)
+Value: Select a non-image file (like .txt, .pdf, etc.)
+
+Expected Response: 400 Bad Request
+Response will contain: {"message": "Only image files are allowed!"}
+
+==========================================
+12. UPLOAD LARGE FILE (>5MB)
+==========================================
+URL: POST https://arabfilmsserver.onrender.com/api/upload/image
+Headers: None
+
+Body: form-data
+Key: image (Type: File)
+Value: Select an image file larger than 5MB
+
+Expected Response: 400 Bad Request
+Response will contain: {"message": "File too large. Maximum size is 5MB."}
+
+==========================================
+13. CREATE WORK WITH INVALID IMAGE
+==========================================
+URL: POST https://arabfilmsserver.onrender.com/api/works/with-image
+Headers: None
+
+Body: form-data
+Keys and Values:
+- type: film
+- nameArabic: فيلم مع صورة خاطئة
+- nameEnglish: Film with Invalid Image
+- year: 2024
+- director: Director
+- assistantDirector: AD
+- genre: Drama
+- cast: ["Actor"]
+- country: Egypt
+- filmingLocation: Cairo
+- summary: Test
+- image: [Select File] (Choose a non-image file like .txt)
+
+Expected Response: 400 Bad Request
+Response will contain: {"message": "Only image files are allowed!"}
+
+==========================================
+TESTING SEQUENCE WITH UPLOAD
+==========================================
+1. Start with "UPLOAD IMAGE" - save the returned secure_url
+2. Use that secure_url as posterUrl in "CREATE FILM"
+3. Try "CREATE FILM WITH IMAGE UPLOAD" - upload image directly with form data
+4. Try "CREATE SERIES WITH IMAGE UPLOAD" - upload image with series data
+5. Use the returned _id in "GET WORK BY ID"
+6. Use that _id in "UPDATE WORK"
+7. Use that _id in "DELETE WORK"
+8. Try "GET ALL WORKS" to see remaining works
+9. Test validation errors with "INVALID" requests
+
+==========================================
+ENVIRONMENT VARIABLES (Optional)
+==========================================
+In Postman, you can set these environment variables:
+- baseUrl: https://arabfilmsserver.onrender.com
+- workId: (will be set automatically from create responses)
+- uploadedImageUrl: (will be set from upload responses)
+
+Then use {{baseUrl}}/api/works, {{workId}}, and {{uploadedImageUrl}} in your requests.
+
+==========================================
+NOTES
+==========================================
+- All timestamps are automatically added (createdAt, updatedAt)
+- The _id field is automatically generated by MongoDB
+- Validation errors will show specific field names and messages
+- The API supports both "film" and "series" types
+- Series require seasonsCount and episodesCount fields
+- All string fields are trimmed automatically
+- Cast must be a non-empty array of strings
+- Year must be between 1800 and 3000
+- Image upload supports: JPG, PNG, GIF, WEBP (max 5MB)
+- Uploaded images are stored in Cloudinary folder: arabfilm/posters
+- You can use either uploaded image URLs or direct image URLs for posterUrl
+- NEW: /api/works/with-image endpoint allows creating work + uploading image in one request
+- posterUrl is now optional when using /with-image endpoint (image file will be used instead)
