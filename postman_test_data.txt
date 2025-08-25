@@ -459,3 +459,464 @@ NOTES
 - You can use either uploaded image URLs or direct image URLs for posterUrl
 - NEW: /api/works/with-image endpoint allows creating work + uploading image in one request
 - posterUrl is now optional when using /with-image endpoint (image file will be used instead)
+
+==========================================
+FAVORITES ENDPOINTS TEST DATA
+==========================================
+
+==========================================
+14. ADD TO FAVORITES
+==========================================
+URL: POST https://arabfilmsserver.onrender.com/api/users/favorites
+Headers: 
+- Authorization: Bearer {{authToken}}
+- Content-Type: application/json
+
+Body (raw JSON):
+{
+  "workId": "{{workId}}"
+}
+
+Expected Response: 200 OK
+Response will contain: 
+{
+  "message": "Added to favorites successfully",
+  "favorites": ["{{workId}}"]
+}
+
+==========================================
+15. REMOVE FROM FAVORITES
+==========================================
+URL: DELETE https://arabfilmsserver.onrender.com/api/users/favorites/{{workId}}
+Headers: 
+- Authorization: Bearer {{authToken}}
+
+Expected Response: 200 OK
+Response will contain: 
+{
+  "message": "Removed from favorites successfully",
+  "favorites": []
+}
+
+==========================================
+16. GET FAVORITES LIST
+==========================================
+URL: GET https://arabfilmsserver.onrender.com/api/users/favorites
+Headers: 
+- Authorization: Bearer {{authToken}}
+
+Expected Response: 200 OK
+Response will contain: 
+{
+  "favorites": [
+    {
+      "_id": "{{workId}}",
+      "type": "film",
+      "nameArabic": "اسم العمل",
+      "nameEnglish": "Work Name",
+      "year": 2024,
+      "director": "المخرج",
+      "genre": "النوع",
+      "posterUrl": "https://example.com/poster.jpg"
+    }
+  ],
+  "count": 1
+}
+
+==========================================
+17. CHECK FAVORITE STATUS
+==========================================
+URL: GET https://arabfilmsserver.onrender.com/api/users/favorites/check/{{workId}}
+Headers: 
+- Authorization: Bearer {{authToken}}
+
+Expected Response: 200 OK
+Response will contain: 
+{
+  "isFavorite": true,
+  "workId": "{{workId}}"
+}
+
+==========================================
+18. ADD NON-EXISTENT WORK TO FAVORITES
+==========================================
+URL: POST https://arabfilmsserver.onrender.com/api/users/favorites
+Headers: 
+- Authorization: Bearer {{authToken}}
+- Content-Type: application/json
+
+Body (raw JSON):
+{
+  "workId": "507f1f77bcf86cd799439011"
+}
+
+Expected Response: 404 Not Found
+Response will contain: {"message": "Work not found"}
+
+==========================================
+19. ADD ALREADY FAVORITED WORK
+==========================================
+URL: POST https://arabfilmsserver.onrender.com/api/users/favorites
+Headers: 
+- Authorization: Bearer {{authToken}}
+- Content-Type: application/json
+
+Body (raw JSON):
+{
+  "workId": "{{workId}}"
+}
+
+Expected Response: 400 Bad Request
+Response will contain: {"message": "Work is already in favorites"}
+
+==========================================
+20. REMOVE NON-FAVORITED WORK
+==========================================
+URL: DELETE https://arabfilmsserver.onrender.com/api/users/favorites/{{workId}}
+Headers: 
+- Authorization: Bearer {{authToken}}
+
+Expected Response: 400 Bad Request
+Response will contain: {"message": "Work is not in favorites"}
+
+==========================================
+FAVORITES TESTING SEQUENCE
+==========================================
+1. First, create a work using "CREATE FILM" or "CREATE SERIES"
+2. Save the returned _id as {{workId}} environment variable
+3. Check initial favorite status with "CHECK FAVORITE STATUS" (should be false)
+4. Add work to favorites with "ADD TO FAVORITES"
+5. Check favorite status again (should be true)
+6. Get favorites list with "GET FAVORITES LIST"
+7. Try adding the same work again (should fail)
+8. Remove work from favorites with "REMOVE FROM FAVORITES"
+9. Check final favorite status (should be false)
+10. Try removing the same work again (should fail)
+11. Test with non-existent work ID
+
+==========================================
+FAVORITES ENVIRONMENT VARIABLES
+==========================================
+In Postman, set these environment variables:
+- authToken: (from user signin response)
+- workId: (from create work response)
+- userId: (from user signin response)
+
+==========================================
+FAVORITES NOTES
+==========================================
+- All favorites endpoints require authentication (Bearer token)
+- Each user has their own favorites list
+- Favorites are stored as an array of work IDs in the user document
+- The getFavorites endpoint populates work details automatically
+- You can check if a work is favorited without loading the full favorites list
+- Adding/removing favorites is idempotent (safe to call multiple times)
+- Favorites persist until explicitly removed by the user
+
+==========================================
+COMMENT ENDPOINTS TEST DATA
+==========================================
+
+==========================================
+21. ADD COMMENT
+==========================================
+URL: POST https://arabfilmsserver.onrender.com/api/comments
+Headers: 
+- Authorization: Bearer {{authToken}}
+- Content-Type: application/json
+
+Body (raw JSON):
+{
+  "workId": "{{workId}}",
+  "commentText": "فيلم رائع جداً! أحببت القصة والتمثيل"
+}
+
+Expected Response: 201 Created
+Response will contain: 
+{
+  "_id": "64f8a1b2c3d4e5f6a7b8c9d1",
+  "userId": "{{userId}}",
+  "workId": "{{workId}}",
+  "commentText": "فيلم رائع جداً! أحببت القصة والتمثيل",
+  "createdAt": "2024-01-15T10:30:00.000Z"
+}
+
+==========================================
+22. GET COMMENTS FOR WORK
+==========================================
+URL: GET https://arabfilmsserver.onrender.com/api/comments/work/{{workId}}
+Headers: None
+
+Expected Response: 200 OK
+Response will contain: 
+[
+  {
+    "_id": "64f8a1b2c3d4e5f6a7b8c9d1",
+    "userId": "64f8a1b2c3d4e5f6a7b8c9d2",
+    "workId": "{{workId}}",
+    "commentText": "فيلم رائع جداً! أحببت القصة والتمثيل",
+    "createdAt": "2024-01-15T10:30:00.000Z"
+  }
+]
+
+==========================================
+23. GET ALL COMMENTS (ADMIN)
+==========================================
+URL: GET https://arabfilmsserver.onrender.com/api/comments/admin
+Headers: 
+- Authorization: Bearer {{adminToken}}
+
+Expected Response: 200 OK
+Response will contain: 
+[
+  {
+    "_id": "64f8a1b2c3d4e5f6a7b8c9d1",
+    "userId": "64f8a1b2c3d4e5f6a7b8c9d2",
+    "workId": "{{workId}}",
+    "commentText": "فيلم رائع جداً! أحببت القصة والتمثيل",
+    "createdAt": "2024-01-15T10:30:00.000Z"
+  }
+]
+
+==========================================
+24. GET COMMENTS FOR PUBLISHER WORKS
+==========================================
+URL: GET https://arabfilmsserver.onrender.com/api/comments/publisher
+Headers: 
+- Authorization: Bearer {{publisherToken}}
+
+Expected Response: 200 OK
+Response will contain: 
+[
+  {
+    "_id": "64f8a1b2c3d4e5f6a7b8c9d1",
+    "userId": "64f8a1b2c3d4e5f6a7b8c9d2",
+    "workId": "{{workId}}",
+    "commentText": "فيلم رائع جداً! أحببت القصة والتمثيل",
+    "createdAt": "2024-01-15T10:30:00.000Z"
+  }
+]
+
+==========================================
+25. DELETE COMMENT (ADMIN)
+==========================================
+URL: DELETE https://arabfilmsserver.onrender.com/api/comments/{{commentId}}
+Headers: 
+- Authorization: Bearer {{adminToken}}
+
+Expected Response: 204 No Content
+
+==========================================
+26. ADD COMMENT WITH MISSING DATA
+==========================================
+URL: POST https://arabfilmsserver.onrender.com/api/comments
+Headers: 
+- Authorization: Bearer {{authToken}}
+- Content-Type: application/json
+
+Body (raw JSON):
+{
+  "workId": "{{workId}}"
+}
+
+Expected Response: 400 Bad Request
+Response will contain: {"message": "workId and commentText are required"}
+
+==========================================
+27. ADD COMMENT TO NON-EXISTENT WORK
+==========================================
+URL: POST https://arabfilmsserver.onrender.com/api/comments
+Headers: 
+- Authorization: Bearer {{authToken}}
+- Content-Type: application/json
+
+Body (raw JSON):
+{
+  "workId": "507f1f77bcf86cd799439011",
+  "commentText": "تعليق على عمل غير موجود"
+}
+
+Expected Response: 404 Not Found
+Response will contain: {"message": "Work not found"}
+
+==========================================
+RATING ENDPOINTS TEST DATA
+==========================================
+
+==========================================
+28. RATE WORK
+==========================================
+URL: POST https://arabfilmsserver.onrender.com/api/ratings
+Headers: 
+- Authorization: Bearer {{authToken}}
+- Content-Type: application/json
+
+Body (raw JSON):
+{
+  "workId": "{{workId}}",
+  "ratingValue": 4
+}
+
+Expected Response: 201 Created
+Response will contain: 
+{
+  "_id": "64f8a1b2c3d4e5f6a7b8c9d1",
+  "userId": "{{userId}}",
+  "workId": "{{workId}}",
+  "ratingValue": 4,
+  "createdAt": "2024-01-15T10:30:00.000Z",
+  "updatedAt": "2024-01-15T10:30:00.000Z"
+}
+
+==========================================
+29. GET AVERAGE RATING
+==========================================
+URL: GET https://arabfilmsserver.onrender.com/api/ratings/average/{{workId}}
+Headers: None
+
+Expected Response: 200 OK
+Response will contain: 
+{
+  "average": 4.0,
+  "count": 1
+}
+
+==========================================
+30. GET AVERAGE RATING (NO RATINGS)
+==========================================
+URL: GET https://arabfilmsserver.onrender.com/api/ratings/average/{{workId}}
+Headers: None
+
+Expected Response: 200 OK
+Response will contain: 
+{
+  "average": 0,
+  "count": 0
+}
+
+==========================================
+31. GET ALL RATINGS (ADMIN)
+==========================================
+URL: GET https://arabfilmsserver.onrender.com/api/ratings/admin
+Headers: 
+- Authorization: Bearer {{adminToken}}
+
+Expected Response: 200 OK
+Response will contain: 
+[
+  {
+    "_id": "64f8a1b2c3d4e5f6a7b8c9d1",
+    "userId": "{{userId}}",
+    "workId": "{{workId}}",
+    "ratingValue": 4,
+    "createdAt": "2024-01-15T10:30:00.000Z",
+    "updatedAt": "2024-01-15T10:30:00.000Z"
+  }
+]
+
+==========================================
+32. GET RATINGS FOR PUBLISHER WORKS
+==========================================
+URL: GET https://arabfilmsserver.onrender.com/api/ratings/publisher
+Headers: 
+- Authorization: Bearer {{publisherToken}}
+
+Expected Response: 200 OK
+Response will contain: 
+[
+  {
+    "_id": "64f8a1b2c3d4e5f6a7b8c9d1",
+    "userId": "{{userId}}",
+    "workId": "{{workId}}",
+    "ratingValue": 4,
+    "createdAt": "2024-01-15T10:30:00.000Z",
+    "updatedAt": "2024-01-15T10:30:00.000Z"
+  }
+]
+
+==========================================
+33. RATE WORK WITH INVALID VALUE
+==========================================
+URL: POST https://arabfilmsserver.onrender.com/api/ratings
+Headers: 
+- Authorization: Bearer {{authToken}}
+- Content-Type: application/json
+
+Body (raw JSON):
+{
+  "workId": "{{workId}}",
+  "ratingValue": 6
+}
+
+Expected Response: 400 Bad Request
+Response will contain: {"message": "ratingValue must be between 1 and 5"}
+
+==========================================
+34. RATE WORK WITH MISSING DATA
+==========================================
+URL: POST https://arabfilmsserver.onrender.com/api/ratings
+Headers: 
+- Authorization: Bearer {{authToken}}
+- Content-Type: application/json
+
+Body (raw JSON):
+{
+  "workId": "{{workId}}"
+}
+
+Expected Response: 400 Bad Request
+Response will contain: {"message": "workId and ratingValue are required"}
+
+==========================================
+35. RATE NON-EXISTENT WORK
+==========================================
+URL: POST https://arabfilmsserver.onrender.com/api/ratings
+Headers: 
+- Authorization: Bearer {{authToken}}
+- Content-Type: application/json
+
+Body (raw JSON):
+{
+  "workId": "507f1f77bcf86cd799439011",
+  "ratingValue": 4
+}
+
+Expected Response: 404 Not Found
+Response will contain: {"message": "Work not found"}
+
+==========================================
+COMMENT & RATING TESTING SEQUENCE
+==========================================
+1. First, create a work using "CREATE FILM" or "CREATE SERIES"
+2. Save the returned _id as {{workId}} environment variable
+3. Add a comment using "ADD COMMENT"
+4. Save the returned comment _id as {{commentId}} environment variable
+5. Get comments for the work using "GET COMMENTS FOR WORK"
+6. Rate the work using "RATE WORK"
+7. Get average rating using "GET AVERAGE RATING"
+8. Test admin endpoints with admin token
+9. Test publisher endpoints with publisher token
+10. Test error cases with invalid data
+
+==========================================
+COMMENT & RATING ENVIRONMENT VARIABLES
+==========================================
+In Postman, set these environment variables:
+- authToken: (from user signin response)
+- adminToken: (from admin signin response)
+- publisherToken: (from publisher signin response)
+- workId: (from create work response)
+- commentId: (from add comment response)
+- userId: (from user signin response)
+
+==========================================
+COMMENT & RATING NOTES
+==========================================
+- Comments have a maximum length of 2000 characters
+- Ratings must be between 1 and 5 (inclusive)
+- Each user can only have one rating per work (upsert behavior)
+- Comments are sorted by createdAt (newest first)
+- Admin can view and delete all comments
+- Publishers can only view comments on their own works
+- Average rating is calculated to 2 decimal places
+- Comments and ratings are automatically linked to the authenticated user

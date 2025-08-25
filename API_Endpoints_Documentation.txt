@@ -10,12 +10,16 @@
                                 📋 ALL ENDPOINTS SUMMARY
 ================================================================================
 
-🔐 USER ENDPOINTS (4 endpoints):
+🔐 USER ENDPOINTS (8 endpoints):
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 1️⃣ POST   /api/users/signup                    - إنشاء حساب مستخدم جديد
 2️⃣ POST   /api/users/signin                    - تسجيل دخول المستخدم
 3️⃣ POST   /api/users/forgot-password           - طلب إعادة تعيين كلمة المرور
 4️⃣ POST   /api/users/reset-password/:token     - إعادة تعيين كلمة المرور
+5️⃣ POST   /api/users/favorites                 - إضافة عمل فني إلى المفضلة
+6️⃣ DELETE /api/users/favorites/:workId         - إزالة عمل فني من المفضلة
+7️⃣ GET    /api/users/favorites                 - جلب قائمة المفضلة للمستخدم
+8️⃣ GET    /api/users/favorites/check/:workId   - التحقق من حالة المفضلة لعمل فني
 
 🎬 WORK ENDPOINTS (6 endpoints):
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -26,11 +30,26 @@
 5️⃣ PATCH  /api/works/:id                       - تحديث عمل فني محدد
 6️⃣ DELETE /api/works/:id                       - حذف عمل فني محدد
 
+ COMMENT ENDPOINTS (5 endpoints):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1️⃣ POST   /api/comments                        - إضافة تعليق على عمل فني
+2️⃣ GET    /api/comments/work/:workId           - جلب تعليقات عمل فني محدد
+3️⃣ GET    /api/comments/admin                  - جلب جميع التعليقات (للمدير)
+4️⃣ GET    /api/comments/publisher              - جلب تعليقات أعمال الناشر
+5️⃣ DELETE /api/comments/:id                    - حذف تعليق (للمدير)
+
+ RATING ENDPOINTS (5 endpoints):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1️⃣ POST   /api/ratings                         - تقييم عمل فني
+2️⃣ GET    /api/ratings/average/:workId         - جلب متوسط تقييم عمل فني
+3️⃣ GET    /api/ratings/admin                   - جلب جميع التقييمات (للمدير)
+4️⃣ GET    /api/ratings/publisher               - جلب تقييمات أعمال الناشر
+
 📤 UPLOAD ENDPOINTS (1 endpoint):
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 1️⃣ POST   /api/upload/image                    - رفع صورة واحدة
 
-📊 TOTAL: 11 ENDPOINTS
+📊 TOTAL: 25 ENDPOINTS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ================================================================================
@@ -135,6 +154,103 @@
 
 ❌ ERROR RESPONSES:
 - 400: "Token is invalid or has expired"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+5️⃣ ADD TO FAVORITES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 METHOD: POST
+🔗 URL: /api/users/favorites
+📝 DESCRIPTION: إضافة عمل فني إلى قائمة المفضلة للمستخدم
+🔐 AUTHENTICATION: Bearer Token مطلوب
+
+📤 REQUEST BODY:
+{
+  "workId": "64f8a1b2c3d4e5f6a7b8c9d0"  // مطلوب: معرف العمل الفني
+}
+
+📥 SUCCESS RESPONSE (200):
+{
+  "message": "Added to favorites successfully",
+  "favorites": ["64f8a1b2c3d4e5f6a7b8c9d0", "64f8a1b2c3d4e5f6a7b8c9d1"]
+}
+
+❌ ERROR RESPONSES:
+- 400: "Work is already in favorites"
+- 404: "Work not found"
+- 401: "Access denied"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+6️⃣ REMOVE FROM FAVORITES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 METHOD: DELETE
+🔗 URL: /api/users/favorites/:workId
+📝 DESCRIPTION: إزالة عمل فني من قائمة المفضلة للمستخدم
+🔐 AUTHENTICATION: Bearer Token مطلوب
+
+📤 URL PARAMETERS:
+- workId: "64f8a1b2c3d4e5f6a7b8c9d0"  // مطلوب: معرف العمل الفني
+
+📥 SUCCESS RESPONSE (200):
+{
+  "message": "Removed from favorites successfully",
+  "favorites": ["64f8a1b2c3d4e5f6a7b8c9d1"]
+}
+
+❌ ERROR RESPONSES:
+- 400: "Work is not in favorites"
+- 401: "Access denied"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+7️⃣ GET FAVORITES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 METHOD: GET
+🔗 URL: /api/users/favorites
+📝 DESCRIPTION: جلب قائمة المفضلة للمستخدم مع تفاصيل الأعمال الفنية
+🔐 AUTHENTICATION: Bearer Token مطلوب
+
+📥 SUCCESS RESPONSE (200):
+{
+  "favorites": [
+    {
+      "_id": "64f8a1b2c3d4e5f6a7b8c9d0",
+      "type": "film",
+      "nameArabic": "اسم العمل بالعربية",
+      "nameEnglish": "Work Name in English",
+      "year": 2024,
+      "director": "اسم المخرج",
+      "genre": "نوع العمل",
+      "posterUrl": "https://example.com/poster.jpg"
+    }
+  ],
+  "count": 1
+}
+
+❌ ERROR RESPONSES:
+- 401: "Access denied"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+8️⃣ CHECK FAVORITE STATUS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 METHOD: GET
+🔗 URL: /api/users/favorites/check/:workId
+📝 DESCRIPTION: التحقق من حالة المفضلة لعمل فني محدد
+🔐 AUTHENTICATION: Bearer Token مطلوب
+
+📤 URL PARAMETERS:
+- workId: "64f8a1b2c3d4e5f6a7b8c9d0"  // مطلوب: معرف العمل الفني
+
+📥 SUCCESS RESPONSE (200):
+{
+  "isFavorite": true,
+  "workId": "64f8a1b2c3d4e5f6a7b8c9d0"
+}
+
+❌ ERROR RESPONSES:
+- 401: "Access denied"
 
 ================================================================================
                                 🎬 WORK ENDPOINTS
@@ -397,6 +513,262 @@
 - 400: "Invalid work id"
 - 404: "Work not found"
 - 500: Server error
+
+================================================================================
+                                💬 COMMENT ENDPOINTS
+================================================================================
+
+📍 BASE PATH: /api/comments
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1️⃣ ADD COMMENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 METHOD: POST
+🔗 URL: /api/comments
+📝 DESCRIPTION: إضافة تعليق على عمل فني محدد
+🔐 AUTHENTICATION: Bearer Token مطلوب
+🔐 ROLES: user, admin, publisher
+
+📤 REQUEST BODY:
+{
+  "workId": "64f8a1b2c3d4e5f6a7b8c9d0",  // مطلوب: معرف العمل الفني
+  "commentText": "نص التعليق هنا"          // مطلوب: نص التعليق (حد أقصى 2000 حرف)
+}
+
+📥 SUCCESS RESPONSE (201):
+{
+  "_id": "64f8a1b2c3d4e5f6a7b8c9d1",
+  "userId": "64f8a1b2c3d4e5f6a7b8c9d2",
+  "workId": "64f8a1b2c3d4e5f6a7b8c9d0",
+  "commentText": "نص التعليق هنا",
+  "createdAt": "2024-01-15T10:30:00.000Z"
+}
+
+❌ ERROR RESPONSES:
+- 400: "workId and commentText are required"
+- 404: "Work not found"
+- 401: "Access denied"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+2️⃣ GET COMMENTS FOR WORK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 METHOD: GET
+🔗 URL: /api/comments/work/:workId
+📝 DESCRIPTION: جلب جميع التعليقات لعمل فني محدد
+🔐 AUTHENTICATION: غير مطلوب
+
+📤 URL PARAMETERS:
+- workId: "64f8a1b2c3d4e5f6a7b8c9d0"  // مطلوب: معرف العمل الفني
+
+📥 SUCCESS RESPONSE (200):
+[
+  {
+    "_id": "64f8a1b2c3d4e5f6a7b8c9d1",
+    "userId": "64f8a1b2c3d4e5f6a7b8c9d2",
+    "workId": "64f8a1b2c3d4e5f6a7b8c9d0",
+    "commentText": "نص التعليق هنا",
+    "createdAt": "2024-01-15T10:30:00.000Z"
+  },
+  {
+    "_id": "64f8a1b2c3d4e5f6a7b8c9d3",
+    "userId": "64f8a1b2c3d4e5f6a7b8c9d4",
+    "workId": "64f8a1b2c3d4e5f6a7b8c9d0",
+    "commentText": "تعليق آخر",
+    "createdAt": "2024-01-15T09:15:00.000Z"
+  }
+]
+
+❌ ERROR RESPONSES:
+- 500: Server error
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+3️⃣ GET ALL COMMENTS (ADMIN)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 METHOD: GET
+🔗 URL: /api/comments/admin
+📝 DESCRIPTION: جلب جميع التعليقات في النظام (للمدير فقط)
+🔐 AUTHENTICATION: Bearer Token مطلوب
+🔐 ROLES: admin
+
+📥 SUCCESS RESPONSE (200):
+[
+  {
+    "_id": "64f8a1b2c3d4e5f6a7b8c9d1",
+    "userId": "64f8a1b2c3d4e5f6a7b8c9d2",
+    "workId": "64f8a1b2c3d4e5f6a7b8c9d0",
+    "commentText": "نص التعليق هنا",
+    "createdAt": "2024-01-15T10:30:00.000Z"
+  }
+]
+
+❌ ERROR RESPONSES:
+- 401: "Access denied"
+- 403: "Insufficient permissions"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+4️⃣ GET COMMENTS FOR PUBLISHER WORKS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 METHOD: GET
+🔗 URL: /api/comments/publisher
+📝 DESCRIPTION: جلب تعليقات أعمال الناشر (للناشر فقط)
+🔐 AUTHENTICATION: Bearer Token مطلوب
+🔐 ROLES: publisher
+
+📥 SUCCESS RESPONSE (200):
+[
+  {
+    "_id": "64f8a1b2c3d4e5f6a7b8c9d1",
+    "userId": "64f8a1b2c3d4e5f6a7b8c9d2",
+    "workId": "64f8a1b2c3d4e5f6a7b8c9d0",
+    "commentText": "نص التعليق هنا",
+    "createdAt": "2024-01-15T10:30:00.000Z"
+  }
+]
+
+❌ ERROR RESPONSES:
+- 401: "Access denied"
+- 403: "Insufficient permissions"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+5️⃣ DELETE COMMENT (ADMIN)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 METHOD: DELETE
+🔗 URL: /api/comments/:id
+📝 DESCRIPTION: حذف تعليق محدد (للمدير فقط)
+🔐 AUTHENTICATION: Bearer Token مطلوب
+🔐 ROLES: admin
+
+📤 URL PARAMETERS:
+- id: "64f8a1b2c3d4e5f6a7b8c9d1"  // مطلوب: معرف التعليق
+
+📥 SUCCESS RESPONSE (204): No content
+
+❌ ERROR RESPONSES:
+- 404: "Comment not found"
+- 401: "Access denied"
+- 403: "Insufficient permissions"
+
+================================================================================
+                                ⭐ RATING ENDPOINTS
+================================================================================
+
+📍 BASE PATH: /api/ratings
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1️⃣ RATE WORK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 METHOD: POST
+🔗 URL: /api/ratings
+📝 DESCRIPTION: تقييم عمل فني (من 1 إلى 5 نجوم)
+🔐 AUTHENTICATION: Bearer Token مطلوب
+🔐 ROLES: user, admin, publisher
+
+📤 REQUEST BODY:
+{
+  "workId": "64f8a1b2c3d4e5f6a7b8c9d0",  // مطلوب: معرف العمل الفني
+  "ratingValue": 4                        // مطلوب: قيمة التقييم (1-5)
+}
+
+📥 SUCCESS RESPONSE (201):
+{
+  "_id": "64f8a1b2c3d4e5f6a7b8c9d1",
+  "userId": "64f8a1b2c3d4e5f6a7b8c9d2",
+  "workId": "64f8a1b2c3d4e5f6a7b8c9d0",
+  "ratingValue": 4,
+  "createdAt": "2024-01-15T10:30:00.000Z",
+  "updatedAt": "2024-01-15T10:30:00.000Z"
+}
+
+❌ ERROR RESPONSES:
+- 400: "workId and ratingValue are required"
+- 400: "ratingValue must be between 1 and 5"
+- 404: "Work not found"
+- 401: "Access denied"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+2️⃣ GET AVERAGE RATING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 METHOD: GET
+🔗 URL: /api/ratings/average/:workId
+📝 DESCRIPTION: جلب متوسط تقييم عمل فني محدد
+🔐 AUTHENTICATION: غير مطلوب
+
+📤 URL PARAMETERS:
+- workId: "64f8a1b2c3d4e5f6a7b8c9d0"  // مطلوب: معرف العمل الفني
+
+📥 SUCCESS RESPONSE (200):
+{
+  "average": 4.25,  // متوسط التقييم (رقم عشري)
+  "count": 8        // عدد التقييمات
+}
+
+📥 SUCCESS RESPONSE (200) - NO RATINGS:
+{
+  "average": 0,
+  "count": 0
+}
+
+❌ ERROR RESPONSES:
+- 500: Server error
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+3️⃣ GET ALL RATINGS (ADMIN)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 METHOD: GET
+🔗 URL: /api/ratings/admin
+📝 DESCRIPTION: جلب جميع التقييمات في النظام (للمدير فقط)
+🔐 AUTHENTICATION: Bearer Token مطلوب
+🔐 ROLES: admin
+
+📥 SUCCESS RESPONSE (200):
+[
+  {
+    "_id": "64f8a1b2c3d4e5f6a7b8c9d1",
+    "userId": "64f8a1b2c3d4e5f6a7b8c9d2",
+    "workId": "64f8a1b2c3d4e5f6a7b8c9d0",
+    "ratingValue": 4,
+    "createdAt": "2024-01-15T10:30:00.000Z",
+    "updatedAt": "2024-01-15T10:30:00.000Z"
+  }
+]
+
+❌ ERROR RESPONSES:
+- 401: "Access denied"
+- 403: "Insufficient permissions"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+4️⃣ GET RATINGS FOR PUBLISHER WORKS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 METHOD: GET
+🔗 URL: /api/ratings/publisher
+📝 DESCRIPTION: جلب تقييمات أعمال الناشر (للناشر فقط)
+🔐 AUTHENTICATION: Bearer Token مطلوب
+🔐 ROLES: publisher
+
+📥 SUCCESS RESPONSE (200):
+[
+  {
+    "_id": "64f8a1b2c3d4e5f6a7b8c9d1",
+    "userId": "64f8a1b2c3d4e5f6a7b8c9d2",
+    "workId": "64f8a1b2c3d4e5f6a7b8c9d0",
+    "ratingValue": 4,
+    "createdAt": "2024-01-15T10:30:00.000Z",
+    "updatedAt": "2024-01-15T10:30:00.000Z"
+  }
+]
+
+❌ ERROR RESPONSES:
+- 401: "Access denied"
+- 403: "Insufficient permissions"
 
 ================================================================================
                                 📤 UPLOAD ENDPOINTS

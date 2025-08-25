@@ -142,3 +142,89 @@ exports.updateUser = async (req, res, next) => {
     next(err);
   }
 };
+
+// Favorites management
+exports.addToFavorites = async (req, res, next) => {
+  try {
+    const { workId } = req.body;
+    const userId = req.user.id;
+
+    // Check if work exists
+    const Work = require('../models/work');
+    const work = await Work.findById(workId);
+    if (!work) {
+      return res.status(404).json({ message: 'Work not found' });
+    }
+
+    // Check if already in favorites
+    const user = await User.findById(userId);
+    if (user.favorites.includes(workId)) {
+      return res.status(400).json({ message: 'Work is already in favorites' });
+    }
+
+    // Add to favorites
+    user.favorites.push(workId);
+    await user.save();
+
+    res.json({ 
+      message: 'Added to favorites successfully',
+      favorites: user.favorites 
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.removeFromFavorites = async (req, res, next) => {
+  try {
+    const { workId } = req.params;
+    const userId = req.user.id;
+
+    const user = await User.findById(userId);
+    if (!user.favorites.includes(workId)) {
+      return res.status(400).json({ message: 'Work is not in favorites' });
+    }
+
+    // Remove from favorites
+    user.favorites = user.favorites.filter(id => id.toString() !== workId);
+    await user.save();
+
+    res.json({ 
+      message: 'Removed from favorites successfully',
+      favorites: user.favorites 
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getFavorites = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const user = await User.findById(userId).populate('favorites');
+    
+    res.json({ 
+      favorites: user.favorites,
+      count: user.favorites.length 
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.checkFavoriteStatus = async (req, res, next) => {
+  try {
+    const { workId } = req.params;
+    const userId = req.user.id;
+
+    const user = await User.findById(userId);
+    const isFavorite = user.favorites.includes(workId);
+
+    res.json({ 
+      isFavorite,
+      workId 
+    });
+  } catch (err) {
+    next(err);
+  }
+};
