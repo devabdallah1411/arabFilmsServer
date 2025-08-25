@@ -100,3 +100,45 @@ exports.resetPassword = async (req, res, next) => {
     next(err);
   }
 };
+
+// Admin: list all users
+exports.listUsers = async (req, res, next) => {
+  try {
+    const users = await User.find({}, { password: 0 }).sort({ createdAt: -1 });
+    res.json(users);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Admin: delete any user
+exports.deleteUser = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const deleted = await User.findByIdAndDelete(id);
+    if (!deleted) return res.status(404).json({ message: 'User not found' });
+    res.status(204).send();
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Admin: update user (role, username, email)
+exports.updateUser = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const allowed = ['username', 'email', 'role', 'password'];
+    const update = {};
+    for (const k of allowed) if (k in req.body) update[k] = req.body[k];
+    const user = await User.findById(id);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    if (update.username !== undefined) user.username = update.username;
+    if (update.email !== undefined) user.email = update.email;
+    if (update.role !== undefined) user.role = update.role;
+    if (update.password !== undefined) user.password = update.password;
+    await user.save();
+    res.json({ id: user._id, username: user.username, email: user.email, role: user.role });
+  } catch (err) {
+    next(err);
+  }
+};

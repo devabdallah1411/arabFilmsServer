@@ -15,4 +15,9 @@ router.post('/reset-password/:token', userController.resetPassword);
 // Admin create users with roles
 router.post('/', authenticate, requireRoles('admin'), userController.createUserByAdmin);
 
+// Admin user management
+router.get('/', authenticate, requireRoles('admin'), userController.listUsers);
+router.delete('/:id', authenticate, requireRoles('admin'), userController.deleteUser);
+router.patch('/:id', authenticate, requireRoles('admin'), userController.updateUser);
+
 module.exports = router;
