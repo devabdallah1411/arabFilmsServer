@@ -19,6 +19,24 @@ exports.signup = async (req, res, next) => {
   }
 };
 
+// Admin-only: create user with role (admin/publisher/user)
+exports.createUserByAdmin = async (req, res, next) => {
+  try {
+    const { username, email, password, role } = req.body;
+    const allowedRoles = ['admin', 'publisher', 'user'];
+    if (role && !allowedRoles.includes(role)) {
+      return res.status(400).json({ message: 'Invalid role' });
+    }
+    const exists = await User.findOne({ $or: [{ email }, { username }] });
+    if (exists) return res.status(400).json({ message: 'User with email or username already exists' });
+    const user = new User({ username, email, password, role: role || 'user' });
+    await user.save();
+    res.status(201).json({ id: user._id, username: user.username, email: user.email, role: user.role });
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.signin = async (req, res, next) => {
   try {
     const { email, password } = req.body;

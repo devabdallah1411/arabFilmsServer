@@ -7,7 +7,11 @@ exports.createWork = async (req, res, next) => {
     if (Array.isArray(req.body.cast)) {
       req.body.cast = req.body.cast.filter(actor => typeof actor === 'string' && actor.trim() !== '');
     }
-    const work = await Work.create(req.body);
+    const workBody = { ...req.body };
+    if (req.user) {
+      workBody.createdBy = req.user.id;
+    }
+    const work = await Work.create(workBody);
     res.status(201).json(work);
   } catch (error) {
     next(error);
@@ -56,6 +60,9 @@ exports.createWorkWithImage = async (req, res, next) => {
       cast: cast,
       posterUrl: posterUrl,
     };
+    if (req.user) {
+      workData.createdBy = req.user.id;
+    }
 
     const work = await Work.create(workData);
     res.status(201).json(work);
@@ -66,7 +73,11 @@ exports.createWorkWithImage = async (req, res, next) => {
 
 exports.getAllWorks = async (req, res, next) => {
   try {
-    const works = await Work.find({}).sort({ createdAt: -1 });
+    let query = {};
+    if (req.user && req.user.role === 'publisher') {
+      query.createdBy = req.user.id;
+    }
+    const works = await Work.find(query).sort({ createdAt: -1 });
     res.json(works);
   } catch (error) {
     next(error);
@@ -87,7 +98,10 @@ exports.getWorkById = async (req, res, next) => {
 exports.updateWork = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const work = await Work.findByIdAndUpdate(id, req.body, {
+    // Prevent ownership changes via update
+    const update = { ...req.body };
+    delete update.createdBy;
+    const work = await Work.findByIdAndUpdate(id, update, {
       new: true,
       runValidators: true,
     });

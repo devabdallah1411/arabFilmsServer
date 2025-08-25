@@ -6,6 +6,9 @@ const cookieParser = require('cookie-parser');
 const userRoutes = require('./routes/userRoutes');
 const workRoutes = require('./routes/workRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
+const commentRoutes = require('./routes/commentRoutes');
+const ratingRoutes = require('./routes/ratingRoutes');
+const siteReviewRoutes = require('./routes/siteReviewRoutes');
 const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
@@ -19,6 +22,9 @@ app.use(cookieParser());
 app.use('/api/users', userRoutes);
 app.use('/api/works', workRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/comments', commentRoutes);
+app.use('/api/ratings', ratingRoutes);
+app.use('/api/site-reviews', siteReviewRoutes);
 
 app.use(errorHandler);
 

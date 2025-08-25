@@ -85,6 +85,11 @@ const workSchema = new mongoose.Schema(
       },
       min: 1,
     },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      index: true,
+    },
   },
   {
     timestamps: true,

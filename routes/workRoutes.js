@@ -6,6 +6,7 @@ const fs = require('fs');
 const workController = require('../controllers/workController');
 
 const router = express.Router();
+const { authenticate, requireRoles, requireWorkOwnerOrAdmin } = require('../middlewares/auth');
 
 // Create uploads directory if it doesn't exist
 const uploadsDir = path.join(__dirname, '../uploads');
@@ -119,12 +120,12 @@ const handleMulterError = (error, req, res, next) => {
   next(error);
 };
 
-router.post('/', createAndUpdateValidation, handleValidation, workController.createWork);
-router.post('/with-image', upload.single('image'), handleMulterError, createAndUpdateValidation, handleValidation, workController.createWorkWithImage);
-router.get('/', workController.getAllWorks);
-router.get('/:id', idParamValidation, handleValidation, workController.getWorkById);
-router.patch('/:id', [...idParamValidation, ...createAndUpdateValidation], handleValidation, workController.updateWork);
-router.delete('/:id', idParamValidation, handleValidation, workController.deleteWork);
+router.post('/', authenticate, requireRoles('admin', 'publisher'), createAndUpdateValidation, handleValidation, workController.createWork);
+router.post('/with-image', authenticate, requireRoles('admin', 'publisher'), upload.single('image'), handleMulterError, createAndUpdateValidation, handleValidation, workController.createWorkWithImage);
+router.get('/', authenticate, requireRoles('admin', 'publisher'), workController.getAllWorks);
+router.get('/:id', authenticate, requireRoles('admin', 'publisher'), idParamValidation, handleValidation, workController.getWorkById);
+router.patch('/:id', authenticate, requireRoles('admin', 'publisher'), requireWorkOwnerOrAdmin, [...idParamValidation, ...createAndUpdateValidation], handleValidation, workController.updateWork);
+router.delete('/:id', authenticate, requireRoles('admin', 'publisher'), requireWorkOwnerOrAdmin, idParamValidation, handleValidation, workController.deleteWork);
 
 module.exports = router;
 

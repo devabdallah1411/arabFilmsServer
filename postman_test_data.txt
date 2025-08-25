@@ -1,3 +1,135 @@
+
+// Role-based users, works, comments, ratings, site reviews
+
+{
+  "info": {"name": "ArabFilm Full Flow", "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"},
+  "item": [
+    {
+      "name": "Auth - Signin Admin",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "url": {"raw": "{{baseUrl}}/api/users/signin", "host": ["{{baseUrl}}"], "path": ["api","users","signin"]},
+        "body": {"mode": "raw", "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"Admin@123\"\n}"}
+      },
+      "event": [{"listen": "test", "script": {"exec": ["pm.globals.set('adminToken', pm.response.json().token);"]}}]
+    },
+    {
+      "name": "Admin - Create Publisher",
+      "request": {
+        "method": "POST",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"},
+          {"key": "Authorization", "value": "Bearer {{adminToken}}"}
+        ],
+        "url": {"raw": "{{baseUrl}}/api/users", "host": ["{{baseUrl}}"], "path": ["api","users"]},
+        "body": {"mode": "raw", "raw": "{\n  \"username\": \"publisher1\",\n  \"email\": \"publisher1@example.com\",\n  \"password\": \"Pub@12345\",\n  \"role\": \"publisher\"\n}"}
+      },
+      "event": [{"listen": "test", "script": {"exec": ["pm.globals.set('publisherId', pm.response.json().id);"]}}]
+    },
+    {
+      "name": "Auth - Signin Publisher",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "url": {"raw": "{{baseUrl}}/api/users/signin", "host": ["{{baseUrl}}"], "path": ["api","users","signin"]},
+        "body": {"mode": "raw", "raw": "{\n  \"email\": \"publisher1@example.com\",\n  \"password\": \"Pub@12345\"\n}"}
+      },
+      "event": [{"listen": "test", "script": {"exec": ["pm.globals.set('publisherToken', pm.response.json().token);"]}}]
+    },
+    {
+      "name": "Publisher - Create Work",
+      "request": {
+        "method": "POST",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"},
+          {"key": "Authorization", "value": "Bearer {{publisherToken}}"}
+        ],
+        "url": {"raw": "{{baseUrl}}/api/works", "host": ["{{baseUrl}}"], "path": ["api","works"]},
+        "body": {"mode": "raw", "raw": "{\n  \"type\": \"film\",\n  \"nameArabic\": \"فيلم الناشر\",\n  \"nameEnglish\": \"Publisher Movie\",\n  \"year\": 2024,\n  \"director\": \"Dir\",\n  \"assistantDirector\": \"AD\",\n  \"genre\": \"Drama\",\n  \"cast\": [\"A\",\"B\"],\n  \"country\": \"EG\",\n  \"filmingLocation\": \"Cairo\",\n  \"summary\": \"Test\",\n  \"posterUrl\": \"https://picsum.photos/200/300\"\n}"}
+      },
+      "event": [{"listen": "test", "script": {"exec": ["pm.globals.set('workId', pm.response.json()._id);"]}}]
+    },
+    {
+      "name": "Auth - Signin User",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "url": {"raw": "{{baseUrl}}/api/users/signin", "host": ["{{baseUrl}}"], "path": ["api","users","signin"]},
+        "body": {"mode": "raw", "raw": "{\n  \"email\": \"user1@example.com\",\n  \"password\": \"User@12345\"\n}"}
+      },
+      "event": [{"listen": "test", "script": {"exec": ["pm.globals.set('userToken', pm.response.json().token);"]}}]
+    },
+    {
+      "name": "User - Add Comment",
+      "request": {
+        "method": "POST",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"},
+          {"key": "Authorization", "value": "Bearer {{userToken}}"}
+        ],
+        "url": {"raw": "{{baseUrl}}/api/comments", "host": ["{{baseUrl}}"], "path": ["api","comments"]},
+        "body": {"mode": "raw", "raw": "{\n  \"workId\": \"{{workId}}\",\n  \"commentText\": \"Great work!\"\n}"}
+      }
+    },
+    {
+      "name": "User - Rate Work",
+      "request": {
+        "method": "POST",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"},
+          {"key": "Authorization", "value": "Bearer {{userToken}}"}
+        ],
+        "url": {"raw": "{{baseUrl}}/api/ratings", "host": ["{{baseUrl}}"], "path": ["api","ratings"]},
+        "body": {"mode": "raw", "raw": "{\n  \"workId\": \"{{workId}}\",\n  \"ratingValue\": 5\n}"}
+      }
+    },
+    {
+      "name": "User - Site Review",
+      "request": {
+        "method": "POST",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"},
+          {"key": "Authorization", "value": "Bearer {{userToken}}"}
+        ],
+        "url": {"raw": "{{baseUrl}}/api/site-reviews", "host": ["{{baseUrl}}"], "path": ["api","site-reviews"]},
+        "body": {"mode": "raw", "raw": "{\n  \"ratingValue\": 4,\n  \"description\": \"Great site!\"\n}"}
+      }
+    },
+    {
+      "name": "Admin - View All Comments",
+      "request": {
+        "method": "GET",
+        "header": [{"key": "Authorization", "value": "Bearer {{adminToken}}"}],
+        "url": {"raw": "{{baseUrl}}/api/comments/admin", "host": ["{{baseUrl}}"], "path": ["api","comments","admin"]}
+      }
+    },
+    {
+      "name": "Admin - View All Ratings",
+      "request": {
+        "method": "GET",
+        "header": [{"key": "Authorization", "value": "Bearer {{adminToken}}"}],
+        "url": {"raw": "{{baseUrl}}/api/ratings/admin", "host": ["{{baseUrl}}"], "path": ["api","ratings","admin"]}
+      }
+    },
+    {
+      "name": "Publisher - View Comments for Own Works",
+      "request": {
+        "method": "GET",
+        "header": [{"key": "Authorization", "value": "Bearer {{publisherToken}}"}],
+        "url": {"raw": "{{baseUrl}}/api/comments/publisher", "host": ["{{baseUrl}}"], "path": ["api","comments","publisher"]}
+      }
+    },
+    {
+      "name": "Publisher - View Ratings for Own Works",
+      "request": {
+        "method": "GET",
+        "header": [{"key": "Authorization", "value": "Bearer {{publisherToken}}"}],
+        "url": {"raw": "{{baseUrl}}/api/ratings/publisher", "host": ["{{baseUrl}}"], "path": ["api","ratings","publisher"]}
+      }
+    }
+  ]
+}
 ==========================================
 ARAB FILM BACKEND - POSTMAN TEST DATA
 ==========================================
