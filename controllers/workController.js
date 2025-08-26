@@ -84,6 +84,16 @@ exports.getAllWorks = async (req, res, next) => {
   }
 };
 
+// New function for public access to all works
+exports.getAllWorksPublic = async (req, res, next) => {
+  try {
+    const works = await Work.find({}).sort({ createdAt: -1 });
+    res.json(works);
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.getWorkById = async (req, res, next) => {
   try {
     const { id } = req.params;

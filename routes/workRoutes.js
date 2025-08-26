@@ -123,6 +123,8 @@ const handleMulterError = (error, req, res, next) => {
 router.post('/', authenticate, requireRoles('admin', 'publisher'), createAndUpdateValidation, handleValidation, workController.createWork);
 router.post('/with-image', authenticate, requireRoles('admin', 'publisher'), upload.single('image'), handleMulterError, createAndUpdateValidation, handleValidation, workController.createWorkWithImage);
 router.get('/', authenticate, requireRoles('admin', 'publisher'), workController.getAllWorks);
+// Public route for fetching all works (no authentication required)
+router.get('/public', workController.getAllWorksPublic);
 router.get('/:id', authenticate, requireRoles('admin', 'publisher'), idParamValidation, handleValidation, workController.getWorkById);
 router.patch('/:id', authenticate, requireRoles('admin', 'publisher'), requireWorkOwnerOrAdmin, [...idParamValidation, ...createAndUpdateValidation], handleValidation, workController.updateWork);
 router.delete('/:id', authenticate, requireRoles('admin', 'publisher'), requireWorkOwnerOrAdmin, idParamValidation, handleValidation, workController.deleteWork);
