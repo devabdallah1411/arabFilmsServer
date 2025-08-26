@@ -74,7 +74,7 @@ exports.createWorkWithImage = async (req, res, next) => {
 exports.getAllWorks = async (req, res, next) => {
   try {
     let query = {};
-    if (req.user && req.user.role === 'publisher') {
+    if (req.user && req.user.role === 'publisher' || req.user.role === 'admin') {
       query.createdBy = req.user.id;
     }
     const works = await Work.find(query).sort({ createdAt: -1 });
