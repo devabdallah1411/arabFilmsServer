@@ -37,6 +37,17 @@ exports.getAverageRating = async (req, res, next) => {
   }
 };
 
+exports.getUserRating = async (req, res, next) => {
+  try {
+    const { workId } = req.params;
+    const rating = await Rating.findOne({ userId: req.user.id, workId });
+    if (!rating) return res.json({ ratingValue: 0 });
+    res.json({ ratingValue: rating.ratingValue });
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.getRatingsForPublisherWorks = async (req, res, next) => {
   try {
     const workIds = await Work.find({ createdBy: req.user.id }).distinct('_id');

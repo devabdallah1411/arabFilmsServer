@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.post('/', authenticate, requireRoles('user', 'admin', 'publisher'), ratingController.rateWork);
 router.get('/average/:workId', ratingController.getAverageRating);
+router.get('/user/:workId', authenticate, requireRoles('user', 'admin', 'publisher'), ratingController.getUserRating);
 
 router.get('/admin', authenticate, requireRoles('admin'), ratingController.getAllRatings);
 router.get('/publisher', authenticate, requireRoles('publisher'), ratingController.getRatingsForPublisherWorks);
