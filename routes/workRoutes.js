@@ -125,6 +125,8 @@ router.post('/with-image', authenticate, requireRoles('admin', 'publisher'), upl
 router.get('/', authenticate, requireRoles('admin', 'publisher'), workController.getAllWorks);
 // Public route for fetching all works (no authentication required)
 router.get('/public', workController.getAllWorksPublic);
+// Public route for fetching work by ID (no authentication required)
+router.get('/public/:id', idParamValidation, handleValidation, workController.getWorkById);
 router.get('/:id', authenticate, requireRoles('admin', 'publisher'), idParamValidation, handleValidation, workController.getWorkById);
 router.patch('/:id', authenticate, requireRoles('admin', 'publisher'), requireWorkOwnerOrAdmin, [...idParamValidation, ...createAndUpdateValidation], handleValidation, workController.updateWork);
 router.delete('/:id', authenticate, requireRoles('admin', 'publisher'), requireWorkOwnerOrAdmin, idParamValidation, handleValidation, workController.deleteWork);
