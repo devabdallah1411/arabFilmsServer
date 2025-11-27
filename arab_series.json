@@ -1,0 +1,100 @@
+[
+  {
+    "type": "series",
+    "nameArabic": "جن",
+    "nameEnglish": "Jinn",
+    "year": 2019,
+    "director": "ميرجان بو شعيا / أمين مطالقة",
+    "assistantDirector": "غير متوفر",
+    "genre": "فانتازيا/مدرسي",
+    "cast": [
+      "سلمى ملحس",
+      "حمزة العقاد",
+      "سلطان الخليل"
+    ],
+    "country": "الأردن",
+    "filmingLocation": "عمّان/البتراء",
+    "summary": "ملخص غير متوفر حالياً.",
+    "posterUrl": "https://upload.wikimedia.org/wikipedia/en/8/8e/Jinn_2019_poster.jpg",
+    "seasonsCount": 1,
+    "episodesCount": 0
+  },
+  {
+    "type": "series",
+    "nameArabic": "مدرسة الروابي للبنات",
+    "nameEnglish": "مدرسة الروابي للبنات",
+    "year": 2021,
+    "director": "تيما الشوملي",
+    "assistantDirector": "غير متوفر",
+    "genre": "دراما مدرسية",
+    "cast": [
+      "اندريا طايع",
+      "نور طلال",
+      "سارة يوسف"
+    ],
+    "country": "الأردن",
+    "filmingLocation": "عمّان",
+    "summary": "ملخص غير متوفر حالياً.",
+    "posterUrl": "https://upload.wikimedia.org/wikipedia/en/5/5d/AlRawabi_School_for_Girls_poster.jpg",
+    "seasonsCount": 2,
+    "episodesCount": 0
+  },
+  {
+    "type": "series",
+    "nameArabic": "راس غليص",
+    "nameEnglish": "راس غليص",
+    "year": 2006,
+    "director": "شعلان الدباس",
+    "assistantDirector": "غير متوفر",
+    "genre": "دراما بدوية",
+    "cast": [
+      "رشيد عسّاف",
+      "زهير النوباني",
+      "ياسر المصري"
+    ],
+    "country": "الأردن",
+    "filmingLocation": "بادية الأردن",
+    "summary": "ملخص غير متوفر حالياً.",
+    "posterUrl": "https://upload.wikimedia.org/wikipedia/ar/6/6d/%D8%B1%D8%A7%D8%B3_%D8%BA%D9%84%D9%8A%D8%B5_%282006%29.jpg",
+    "seasonsCount": 2,
+    "episodesCount": 0
+  },
+  {
+    "type": "series",
+    "nameArabic": "نمر بن عدوان",
+    "nameEnglish": "نمر بن عدوان",
+    "year": 2007,
+    "director": "بسام المصري",
+    "assistantDirector": "غير متوفر",
+    "genre": "سير ذاتية/بدوي",
+    "cast": [
+      "ياسر المصري",
+      "صبا مبارك"
+    ],
+    "country": "الأردن",
+    "filmingLocation": "الأردن/وادي رم",
+    "summary": "ملخص غير متوفر حالياً.",
+    "posterUrl": "https://upload.wikimedia.org/wikipedia/ar/7/7a/%D9%85%D8%B3%D9%84%D8%B3%D9%84_%D9%86%D9%85%D8%B1_%D8%A8%D9%86_%D8%B9%D8%AF%D9%88%D8%A7%D9%86.jpg",
+    "seasonsCount": 1,
+    "episodesCount": 0
+  },
+  {
+    "type": "series",
+    "nameArabic": "عودة أبو تايه",
+    "nameEnglish": "عودة أبو تايه",
+    "year": 2008,
+    "director": "بسام المصري",
+    "assistantDirector": "غير متوفر",
+    "genre": "تاريخي/بدوي",
+    "cast": [
+      "منذر رياحنة",
+      "نبيل المشيني"
+    ],
+    "country": "الأردن",
+    "filmingLocation": "الأردن/وادي رم",
+    "summary": "ملخص غير متوفر حالياً.",
+    "posterUrl": "https://upload.wikimedia.org/wikipedia/ar/2/2f/%D9%85%D8%B3%D9%84%D8%B3%D9%84_%D8%B9%D9%88%D8%AF%D8%A9_%D8%A3%D8%A8%D9%88_%D8%AA%D8%A7%D9%8A%D9%87.jpg",
+    "seasonsCount": 1,
+    "episodesCount": 0
+  }
+]

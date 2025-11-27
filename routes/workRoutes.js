@@ -127,6 +127,15 @@ router.get('/', authenticate, requireRoles('admin', 'publisher'), workController
 router.get('/public', workController.getAllWorksPublic);
 // Public route for fetching work by ID (no authentication required)
 router.get('/public/:id', idParamValidation, handleValidation, workController.getWorkById);
+
+// Movies endpoints
+router.get('/movies/latest', workController.getLatestMovies);
+router.get('/movies', workController.getAllMovies);
+
+// Series endpoints
+router.get('/series/latest', workController.getLatestSeries);
+router.get('/series', workController.getAllSeries);
+
 router.get('/:id', authenticate, requireRoles('admin', 'publisher'), idParamValidation, handleValidation, workController.getWorkById);
 router.patch('/:id', authenticate, requireRoles('admin', 'publisher'), requireWorkOwnerOrAdmin, [...idParamValidation, ...createAndUpdateValidation], handleValidation, workController.updateWork);
 router.delete('/:id', authenticate, requireRoles('admin', 'publisher'), requireWorkOwnerOrAdmin, idParamValidation, handleValidation, workController.deleteWork);

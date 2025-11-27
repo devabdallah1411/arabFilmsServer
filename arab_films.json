@@ -1,0 +1,1004 @@
+[
+  {
+    "type": "film",
+    "nameArabic": "نورة",
+    "nameEnglish": "Norah",
+    "year": 2023,
+    "director": "توفيق الزيدي",
+    "assistantDirector": "غير محدد",
+    "genre": "مغامرة",
+    "cast": [
+      "يعقوب الفرحان",
+      "ماريا بهراوي",
+      "عبدالله السدحان"
+    ],
+    "country": "السعودية",
+    "filmingLocation": "العُلا",
+    "summary": "في التسعينات، يلتقي مدرس وفنان نادر بشابة شجاعة ويبدأ رحلة لاكتشاف الفن تحت قيود المجتمع.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/jAzHxPeSPR60zJE9yZ5UgBzoWWV.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "بركة يقابل بركة",
+    "nameEnglish": "Barakah Meets Barakah",
+    "year": 2016,
+    "director": "محمود صبّاغ",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "هشام فقيه",
+      "فاطمة البنّاوي"
+    ],
+    "country": "السعودية",
+    "filmingLocation": "جدة",
+    "summary": "قصة حب غير تقليدية بين موظف حكومي ونجمة إنستغرام في بيئة محافظة.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/5ryHFxv4Zm6aceI1ZNaJYlzoVdD.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "المرشحة المثالية",
+    "nameEnglish": "The Perfect Candidate",
+    "year": 2019,
+    "director": "هيفاء المنصور",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "ميلا الزهراني",
+      "نورا العواد",
+      "خليد عبد الرحيم"
+    ],
+    "country": "السعودية",
+    "filmingLocation": "مدينة محلية غير معلنة",
+    "summary": "طبيبة سعودية تقرر خوض الانتخابات المحلية لأول مرة.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/j0L0xEFawqZJE8Ik3JRKqKL3mLH.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "مندوب الليل",
+    "nameEnglish": "Night Courier",
+    "year": 2023,
+    "director": "علي الكلثمي",
+    "assistantDirector": "غير محدد",
+    "genre": "مغامرة",
+    "cast": [
+      "محمد الضخّي",
+      "هجر الشمري"
+    ],
+    "country": "السعودية",
+    "filmingLocation": "الرياض",
+    "summary": "رجل ديليفري يقبل عملًا ليليًا غير قانوني لإعالة والده، ويخوض رحلة داخلية وخارجية.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/5yJSI5ibGEn53vUEkng6jqX4WG5.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "أبطال",
+    "nameEnglish": "Champions",
+    "year": 2021,
+    "director": "مانويل كالفو",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "ياسر السقاف",
+      "فاطمة البنّاوي",
+      "خالد الحربي"
+    ],
+    "country": "السعودية",
+    "filmingLocation": "جدة ودبي",
+    "summary": "رياضي سابق يُجبر على تدريب فريق كرة قدم من ذوي الاحتياجات الخاصة.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/jGYJyPzVgrVV2bgClI9uvEZgVLE.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "الفيل الأزرق",
+    "nameEnglish": "The Blue Elephant",
+    "year": 2014,
+    "director": "مروان حامد",
+    "assistantDirector": "أحمد علاء",
+    "genre": "دراما",
+    "cast": [
+      "كريم عبد العزيز",
+      "خالد الصاوي",
+      "نيللي كريم"
+    ],
+    "country": "مصر",
+    "filmingLocation": "القاهرة",
+    "summary": "طبيب نفسي يعود للعمل في مستشفى العباسية ويواجه حالة تغير مجرى حياته.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/lPirLy8UKj2V6SyaWC8zXm5xeUS.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "تراب الماس",
+    "nameEnglish": "Diamond Dust",
+    "year": 2018,
+    "director": "مروان حامد",
+    "assistantDirector": "طارق العريان",
+    "genre": "دراما",
+    "cast": [
+      "آسر ياسين",
+      "منة شلبي",
+      "إياد نصار"
+    ],
+    "country": "مصر",
+    "filmingLocation": "القاهرة",
+    "summary": "شاب يكتشف أسرارًا غامضة بعد مقتل والده ويقرر الانتقام بوسائل غير متوقعة.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/achk3sKbE8GOj0FQ22q0lqLZ8h3.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "هي فوضى؟",
+    "nameEnglish": "Chaos, This Is?",
+    "year": 2007,
+    "director": "يوسف شاهين، خالد يوسف",
+    "assistantDirector": "محمد أمين",
+    "genre": "دراما",
+    "cast": [
+      "منة شلبي",
+      "خالد صالح",
+      "هالة فاخر"
+    ],
+    "country": "مصر",
+    "filmingLocation": "شبرا - القاهرة",
+    "summary": "ضابط فاسد يثير الفوضى في حي شعبي، ويواجه تمرد المجتمع عليه.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/bUo2rjMHGp4qDICzKLAaJ1tdQ8E.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "ولاد رزق",
+    "nameEnglish": "Sons of Rizk",
+    "year": 2015,
+    "director": "طارق العريان",
+    "assistantDirector": "أحمد خالد موسى",
+    "genre": "دراما",
+    "cast": [
+      "أحمد عز",
+      "عمرو يوسف",
+      "أحمد الفيشاوي"
+    ],
+    "country": "مصر",
+    "filmingLocation": "القاهرة",
+    "summary": "أربعة إخوة من أسرة فقيرة يتورطون في عالم الجريمة بعد فشلهم في الحياة العادية.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/e3MQdo2s9MC74k8YtYnJZzfFpef.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "الممر",
+    "nameEnglish": "The Passage",
+    "year": 2019,
+    "director": "شريف عرفة",
+    "assistantDirector": "أحمد خالد",
+    "genre": "سياسي",
+    "cast": [
+      "أحمد عز",
+      "هند صبري",
+      "أحمد رزق"
+    ],
+    "country": "مصر",
+    "filmingLocation": "سيوة والصحراء الغربية",
+    "summary": "فيلم حربي يروي بطولات الجيش المصري خلال حرب الاستنزاف ضد إسرائيل.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/o1k1sH3i4idKxucryiS81ziHb8s.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "سرب الحمام",
+    "nameEnglish": "Swarm of Doves",
+    "year": 2018,
+    "director": "رمضان خسروه",
+    "assistantDirector": "عبدالله بوشهري",
+    "genre": "دراما",
+    "cast": [
+      "داود حسين",
+      "فاطمة الصفي",
+      "بشار الشطي"
+    ],
+    "country": "الكويت",
+    "filmingLocation": "الكويت",
+    "summary": "يروي الفيلم نضال الكويتيين خلال فترة الغزو العراقي، ويركز على قيم الوطنية والتضحية.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/X517jdc6NQrUdK2PMCwzt0lkii.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "كان رفيجي",
+    "nameEnglish": "Kan Rfiji",
+    "year": 2014,
+    "director": "حمد النوري",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "حسين المهدي",
+      "عبدالمحسن القفاص",
+      "شهد الياسين"
+    ],
+    "country": "الكويت",
+    "filmingLocation": "مدينة الكويت",
+    "summary": "تدور أحداث الفيلم حول صداقة تتحول إلى صراع بعد أن تتورط الشخصيات في قضايا اجتماعية معقدة.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/chtZWUYetKHpcbvaeJbXZLPq5BM.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "تورا بورا",
+    "nameEnglish": "Tora Bora",
+    "year": 2011,
+    "director": "وليد العوضي",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "سعاد عبدالله",
+      "سعد الفرج"
+    ],
+    "country": "الكويت",
+    "filmingLocation": "الكويت وأفغانستان",
+    "summary": "والدان يسافران للبحث عن ابنهما الذي انضم لجماعة متطرفة في أفغانستان.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/cebXnbNNuvyEE5VWTDol5wvXhC4.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "ظل البحر",
+    "nameEnglish": "Sea Shadow",
+    "year": 2011,
+    "director": "نجوم الغانم",
+    "assistantDirector": "غير محدد",
+    "genre": "أكشن",
+    "cast": [
+      "عمار الطائي",
+      "نيفين مظهر"
+    ],
+    "country": "الإمارات",
+    "filmingLocation": "رأس الخيمة، أم القيوين",
+    "summary": "تدور القصة حول شاب يحاول مواجهة التقاليد المجتمعية في مرحلة البلوغ.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/yjtsABSEZIswdmiifIjvgjCB95o.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "من ألف إلى باء",
+    "nameEnglish": "From A to B",
+    "year": 2014,
+    "director": "علي مصطفى",
+    "assistantDirector": "غير محدد",
+    "genre": "مغامرة",
+    "cast": [
+      "فهد البلوشي",
+      "شادي الفونس",
+      "خالد أبو النجا"
+    ],
+    "country": "الإمارات",
+    "filmingLocation": "أبوظبي، الأردن، لبنان",
+    "summary": "ثلاثة أصدقاء ينطلقون في رحلة برية من أبوظبي إلى بيروت تكريماً لصديقهم المتوفى.",
+    "posterUrl": "https://mena-img-cdn-lb.aws.playco.com/474w/ev-widekhaliji-avod/AVODMENALEFELABAAY2015MAR/AVODMENALEFELABAAY2015MAR-474x677-PST.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "زنزانة",
+    "nameEnglish": "Zinzana",
+    "year": 2015,
+    "director": "ماجد الأنصاري",
+    "assistantDirector": "غير محدد",
+    "genre": "أكشن",
+    "cast": [
+      "صالح بكري",
+      "علي سليمان"
+    ],
+    "country": "الإمارات",
+    "filmingLocation": "دبي",
+    "summary": "رجل يُحتجز في زنزانة صغيرة ويُجبر على مواجهة ضابط شرطة غريب الأطوار.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/f0ETYftQdJKHzeHNQn2oM522lW6.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "الشبح",
+    "nameEnglish": "The Phantom",
+    "year": 2019,
+    "director": "بدر بن حرمل الظاهري",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "عبدالله بن حيدر",
+      "مروان عبدالله"
+    ],
+    "country": "الإمارات",
+    "filmingLocation": "أبوظبي",
+    "summary": "قصة أكشن عن ضابط سري يسعى لكشف شبكة تهريب دولية.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/cllFRaJmSyWlIYwJNbVslRoR9dP.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "باب الشمس",
+    "nameEnglish": "Gate of the Sun",
+    "year": 2004,
+    "director": "يسري نصر الله",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "باسل خياط",
+      "ريم تركي",
+      "عارف الطويل"
+    ],
+    "country": "سوريا",
+    "filmingLocation": "لبنان وسوريا",
+    "summary": "فيلم ملحمي يتناول النكبة الفلسطينية من خلال قصة حب ومقاومة تمتد عبر عقود.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/hWJiUVT8bzbRSo8SOZqBM8oti8T.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "الليل",
+    "nameEnglish": "The Night",
+    "year": 1992,
+    "director": "محمد ملص",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "نجاح سفكوني",
+      "رنا جمول",
+      "سليم صبري"
+    ],
+    "country": "سوريا",
+    "filmingLocation": "القنيطرة",
+    "summary": "يحكي قصة حياة شاب نشأ في مدينة القنيطرة خلال الاحتلال الإسرائيلي.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/7IulwgAbdexRJEbZwWTa7wAFOmK.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "مطر أيلول",
+    "nameEnglish": "September Rain",
+    "year": 2010,
+    "director": "عبد اللطيف عبد الحميد",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "نسرين طافش",
+      "قصي خولي",
+      "نادين خوري"
+    ],
+    "country": "سوريا",
+    "filmingLocation": "طرطوس واللاذقية",
+    "summary": "قصة حب وحنين وواقع اجتماعي يعكس حياة السوريين بعد أحداث هامة في تاريخ البلاد.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/qPuguFf7a6WshwjsTeZxWUDS7FO.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "العاشق",
+    "nameEnglish": "The Lover",
+    "year": 2011,
+    "director": "عبد اللطيف عبد الحميد",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "أسعد فضة",
+      "جيهان عبد العظيم",
+      "سعد مينة"
+    ],
+    "country": "سوريا",
+    "filmingLocation": "دمشق واللاذقية",
+    "summary": "دراما رومانسية عن رجل يعيش بين الماضي والحاضر بحثاً عن الحب والحنين.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/vcNuhYdp6PAjmVdn7nr6lR6s4gD.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "حلاوة الروح",
+    "nameEnglish": "Sweetness of Spirit",
+    "year": 2013,
+    "director": "أنور القوادري",
+    "assistantDirector": "غير محدد",
+    "genre": "تاريخي",
+    "cast": [
+      "غادة عادل",
+      "باسم ياخور",
+      "نسرين طافش"
+    ],
+    "country": "سوريا",
+    "filmingLocation": "بيروت ودمشق",
+    "summary": "تدور القصة حول صراع نفسي ووجداني بين مجموعة من الشخصيات خلال فترة الحرب.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/q3jIq5ZqtiLzjM4vZWY4GH3dgWG.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "حكاية بحرينية",
+    "nameEnglish": "A Bahraini Tale",
+    "year": 2006,
+    "director": "باسل السلمان",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "علي الغرير",
+      "زهراء عرفات",
+      "إبراهيم بحر"
+    ],
+    "country": "البحرين",
+    "filmingLocation": "المنامة",
+    "summary": "دراما اجتماعية تتناول الواقع البحريني خلال النكسة العربية عام 1967.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/eRjkOiXkeqY1oAs8JogUMvGUdgi.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "قصاص",
+    "nameEnglish": "Execution",
+    "year": 2017,
+    "director": "محمد راشد بوعلي",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "جمال الغيلان",
+      "ناصر الجشي"
+    ],
+    "country": "البحرين",
+    "filmingLocation": "البحرين",
+    "summary": "قصة شاب ينتظر تنفيذ حكم القصاص فيه بعد ارتكاب جريمة.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/kdahBLqWeEuDsM4fCBrXw8oCNRm.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "كفرناحوم",
+    "nameEnglish": "Capernaum",
+    "year": 2018,
+    "director": "نادين لبكي",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "زين الرافعي",
+      "يوردانوس شيفيراو"
+    ],
+    "country": "لبنان",
+    "filmingLocation": "بيروت",
+    "summary": "طفل يقاضي والديه بسبب إنجابهما له في عالم مليء بالبؤس والفقر.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/mFnfTVADj8yOxwzprYOmTPselk8.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "هلّأ لوين؟",
+    "nameEnglish": "Where Do We Go Now?",
+    "year": 2011,
+    "director": "نادين لبكي",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "نادين لبكي",
+      "كلود بشارة"
+    ],
+    "country": "لبنان",
+    "filmingLocation": "قرية لبنانية",
+    "summary": "نساء قرية معزولة يحاولن منع رجالها من الانخراط في نزاع طائفي.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/crYsh9vt7ujWoI4o91bfclYp7WM.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "قضية رقم 23",
+    "nameEnglish": "The Insult",
+    "year": 2017,
+    "director": "زياد دويري",
+    "assistantDirector": "غير محدد",
+    "genre": "اجتماعي",
+    "cast": [
+      "عادل كرم",
+      "كامل الباشا"
+    ],
+    "country": "لبنان",
+    "filmingLocation": "بيروت",
+    "summary": "خلاف بين لبناني وفلسطيني يتحول إلى قضية رأي عام تكشف الانقسامات الاجتماعية.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/w9mlrckg3ZU2rsAlKUbLD1CgBTk.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "بيروت الغربية",
+    "nameEnglish": "West Beirut",
+    "year": 1998,
+    "director": "زياد دويري",
+    "assistantDirector": "غير محدد",
+    "genre": "تاريخي",
+    "cast": [
+      "رامي Doueiri",
+      "ريما تركي"
+    ],
+    "country": "لبنان",
+    "filmingLocation": "بيروت",
+    "summary": "مراهقون يحاولون التكيف مع الحياة في بيروت خلال الحرب الأهلية عام 1975.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/djx4ceoh6o5kdLKRuPsMULNWvDl.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "سكر بنات",
+    "nameEnglish": "Caramel",
+    "year": 2007,
+    "director": "نادين لبكي",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "نادين لبكي",
+      "ياسمين المصري"
+    ],
+    "country": "لبنان",
+    "filmingLocation": "بيروت",
+    "summary": "تدور أحداث الفيلم حول مجموعة نساء يعملن في صالون تجميل ويتعاملن مع قضايا الحب والزواج.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/3YAAZuO0Rz33CrIO66NqxMS6R4y.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "ابن بابل",
+    "nameEnglish": "Son of Babylon",
+    "year": 2009,
+    "director": "محمد الدراجي",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "ياسين إبراهيم",
+      "شاذة نجم"
+    ],
+    "country": "العراق",
+    "filmingLocation": "كردستان العراق، بغداد",
+    "summary": "طفل وجدته يبحثان عن والده المفقود في أعقاب سقوط نظام صدام حسين.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/mix4tE0JZBT1v4l72PPlbAvQioM.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "الرحلة",
+    "nameEnglish": "The Journey",
+    "year": 2017,
+    "director": "محمد الدراجي",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "زهراء غندور",
+      "أمير علي"
+    ],
+    "country": "العراق",
+    "filmingLocation": "محطة بغداد المركزية",
+    "summary": "انتحارية شابة تعيد النظر في قرارها عندما تلتقي رجلاً في محطة قطار.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/avmWN1YGYbzW4n1cbffw4uLCZSr.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "تحت رمال بابل",
+    "nameEnglish": "Under the Sands of Babylon",
+    "year": 2014,
+    "director": "محمد الدراجي",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "غير متوفر بدقة"
+    ],
+    "country": "العراق",
+    "filmingLocation": "جنوب العراق",
+    "summary": "يبحث المخرج في مجازر النظام العراقي السابق في جنوب البلاد من خلال شهادات حية.",
+    "posterUrl": "https://www.rudaw.net/Library/Images/Uploaded%20Images/PERLEMANI%20ERAQ/aze.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "أحلام",
+    "nameEnglish": "Dreams",
+    "year": 2006,
+    "director": "محمد الدراجي",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "هيفاء حسين",
+      "بشير العزاوي"
+    ],
+    "country": "العراق",
+    "filmingLocation": "بغداد",
+    "summary": "قصة فتاة تتعرض للظلم في فترة الحرب وتحاول النجاة من ماضيها المؤلم.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/vBfCfRrS3yak8VrPvk4ehJN45Tw.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "كرنتينة",
+    "nameEnglish": "Qarantina",
+    "year": 2010,
+    "director": "عثمان الراوي",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "أسعد عبد المجيد",
+      "حيدر حسين"
+    ],
+    "country": "العراق",
+    "filmingLocation": "بغداد",
+    "summary": "قاتل مأجور يقيم في منزل عائلة عراقية ويكشف تدريجيًا عن تاريخه المظلم.",
+    "posterUrl": "data:image/jpeg;base64,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"
+  },
+  {
+    "type": "film",
+    "nameArabic": "ذيب",
+    "nameEnglish": "Theeb",
+    "year": 2014,
+    "director": "ناجي أبو نوّار",
+    "assistantDirector": "غير محدد",
+    "genre": "رعب",
+    "cast": [
+      "جاسر عيد",
+      "حسن مطلق"
+    ],
+    "country": "الأردن",
+    "filmingLocation": "وادي رم",
+    "summary": "صبي بدوي يواجه مخاطر الصحراء بعد موت أخيه أثناء مهمة في زمن الحرب العالمية الأولى.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/qixAor6q0GDPXcMEVgVi2fnWMb9.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "بنات عبد الرحمن",
+    "nameEnglish": "Daughters of Abdul-Rahman",
+    "year": 2021,
+    "director": "زيد أبو حمدان",
+    "assistantDirector": "غير محدد",
+    "genre": "مغامرة",
+    "cast": [
+      "صبا مبارك",
+      "فرح بسيسو"
+    ],
+    "country": "الأردن",
+    "filmingLocation": "عمان",
+    "summary": "أربع أخوات يجتمعن بعد اختفاء والدهن، وتبدأ رحلة تكشف عن أسرار العائلة.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/eJyuJCKNDklRDHiDputbtl6D8U5.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "200 متر",
+    "nameEnglish": "200 Meters",
+    "year": 2020,
+    "director": "أمين نايفة",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "علي سليمان",
+      "لانا زريق"
+    ],
+    "country": "الأردن",
+    "filmingLocation": "الأردن - قرب الحدود الفلسطينية",
+    "summary": "أب فلسطيني يعيش 200 متر فقط عن عائلته لكنه يضطر لعبور الحدود المحظورة لرؤيتهم.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/gyWlOsvU6S7FQ6SxMdYwLuAbe4s.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "كابتن أبو رائد",
+    "nameEnglish": "Captain Abu Raed",
+    "year": 2007,
+    "director": "أمين مطالقة",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "نادرة عمران",
+      "نديم صوالحة"
+    ],
+    "country": "الأردن",
+    "filmingLocation": "عمان",
+    "summary": "عامل تنظيفات في المطار يقنع الأطفال أنه طيار، ويصبح قدوتهم.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/f3mBW8AR5y6at3jj7FyLgMvBqGO.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "عمر",
+    "nameEnglish": "Omar",
+    "year": 2013,
+    "director": "هاني أبو أسعد",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "آدم بكري",
+      "ليما حبش"
+    ],
+    "country": "فلسطين",
+    "filmingLocation": "الضفة الغربية",
+    "summary": "شاب فلسطيني يناضل من أجل الحب والحرية وسط الاحتلال والشكوك.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/mzCdtXQYdLPrNr16Ld5ZowavKoa.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "الجنة الآن",
+    "nameEnglish": "Paradise Now",
+    "year": 2005,
+    "director": "هاني أبو أسعد",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "قيس ناشف",
+      "علي سليمان"
+    ],
+    "country": "فلسطين",
+    "filmingLocation": "نابلس",
+    "summary": "قصة شابين فلسطينيين يُكلفان بتنفيذ عملية استشهادية في تل أبيب.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/qWZkYa8VdcDZk8uzRB2PfhpM9IL.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "خمسة أولاد وعجل",
+    "nameEnglish": "Five Boys and a Wheel",
+    "year": 2016,
+    "director": "سعيد زاغة",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "علي سليمان",
+      "نادرة عمران"
+    ],
+    "country": "فلسطين",
+    "filmingLocation": "رام الله",
+    "summary": "أب يحاول تعليم ابنه دروساً في الرجولة في بيئة مليئة بالتحديات.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/jFUdJdwaLUs2lLgQnQLrtpFFho2.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "3000 ليلة",
+    "nameEnglish": "3000 Nights",
+    "year": 2015,
+    "director": "مي المصري",
+    "assistantDirector": "غير محدد",
+    "genre": "اجتماعي",
+    "cast": [
+      "ميساء عبد الهادي",
+      "نادرة عمران"
+    ],
+    "country": "فلسطين",
+    "filmingLocation": "الأردن (محاكاة لسجون الاحتلال)",
+    "summary": "معلمة فلسطينية تُسجن ظلمًا وتلد ابنها في السجن وتحاول البقاء على قيد الأمل.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/eYnJuMEOs7qUbx0MnR4HKjAt1AD.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "يدٌ إلهية",
+    "nameEnglish": "Divine Intervention",
+    "year": 2002,
+    "director": "إيليا سليمان",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "إيليا سليمان",
+      "منال خضر"
+    ],
+    "country": "فلسطين",
+    "filmingLocation": "الناصرة، القدس",
+    "summary": "فيلم سريالي يصور الحياة الفلسطينية من خلال مواقف ساخرة وغريبة.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/pczspk2mTCVmG5eyErnB4BZD2HY.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "علي زاوا",
+    "nameEnglish": "Ali Zaoua: Prince of the Streets",
+    "year": 2000,
+    "director": "نبيل عيوش",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "مصطفى الساهل",
+      "هيشام الموهري"
+    ],
+    "country": "المغرب",
+    "filmingLocation": "الدار البيضاء",
+    "summary": "قصة أطفال شوارع يحلمون بالهروب من الواقع القاسي وتحقيق أحلامهم.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/5Uf2zhivRpxTNI9c1MjGwjT3Szx.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "الزين اللي فيك",
+    "nameEnglish": "Much Loved",
+    "year": 2015,
+    "director": "نبيل عيوش",
+    "assistantDirector": "غير محدد",
+    "genre": "وثائقي",
+    "cast": [
+      "لبنى أبيضار",
+      "آسيا نكاشة"
+    ],
+    "country": "المغرب",
+    "filmingLocation": "مراكش",
+    "summary": "يتناول حياة مجموعة من النساء العاملات في الدعارة في مراكش.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/h2Kms0wHMeXK4vYbDmlap1P4rFM.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "حمى",
+    "nameEnglish": "Fever",
+    "year": 2013,
+    "director": "هشام عيوش",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "يوسف جبريل",
+      "سعيد باي"
+    ],
+    "country": "المغرب",
+    "filmingLocation": "الدار البيضاء",
+    "summary": "شاب يخرج من السجن ويكافح لإعادة الاندماج في المجتمع.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/3MHs9BrHt6ZjlPvaL4CP1ULYV2Z.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "يا خيل الله",
+    "nameEnglish": "Horses of God",
+    "year": 2012,
+    "director": "نبيل عيوش",
+    "assistantDirector": "غير محدد",
+    "genre": "وثائقي",
+    "cast": [
+      "عبد الإله العمراني",
+      "عبد الله ديدان"
+    ],
+    "country": "المغرب",
+    "filmingLocation": "سيدي مومن، الدار البيضاء",
+    "summary": "عن حياة شباب ينتهي بهم الحال كإرهابيين انتحاريين في تفجيرات الدار البيضاء.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/xtCYy7sfWIPH2zMUAcHAxxI4Cun.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "أندرومان",
+    "nameEnglish": "Androman",
+    "year": 2012,
+    "director": "عز العرب العلوي",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "جليلة التلمسي",
+      "نزهة رحيل"
+    ],
+    "country": "المغرب",
+    "filmingLocation": "جبال الأطلس",
+    "summary": "قصة فتاة تعيش في عزلة وقسوة المجتمع القبلي في جبال الأطلس.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/uT26F8ylXH7clyuE1WvqYssGxbD.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "معركة الجزائر",
+    "nameEnglish": "The Battle of Algiers",
+    "year": 1966,
+    "director": "جيلو بونتيكورفو",
+    "assistantDirector": "سعد ولد خليفة",
+    "genre": "وثائقي",
+    "cast": [
+      "ياسف سعدي",
+      "إبراهيم حجاج"
+    ],
+    "country": "الجزائر",
+    "filmingLocation": "الجزائر العاصمة",
+    "summary": "فيلم وثائقي درامي يحاكي الثورة الجزائرية ضد الاستعمار الفرنسي.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/2p3AFtOHFvP6OeVMqlnL1zLKOqL.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "ريح الجنوب",
+    "nameEnglish": "The Wind from the South",
+    "year": 1975,
+    "director": "محمد لخضر حامينة",
+    "assistantDirector": "غير محدد",
+    "genre": "سياسي",
+    "cast": [
+      "سيدي بن علي",
+      "عائشة عدلي"
+    ],
+    "country": "الجزائر",
+    "filmingLocation": "الصحراء الجزائرية",
+    "summary": "شاب متمرد في الريف يواجه سلطة الأعراف وسط مجتمع محافظ.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/cTU9MKcpDnfFaGX9CXPzLBjC7PI.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "وقائع سنين الجمر",
+    "nameEnglish": "Chronicle of the Years of Fire",
+    "year": 1975,
+    "director": "محمد لخضر حامينة",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "ياسمينة خضرا",
+      "حسن حسني"
+    ],
+    "country": "الجزائر",
+    "filmingLocation": "الجزائر، مناطق ريفية",
+    "summary": "قصة تطور الوعي الوطني الجزائري من الاستعمار إلى الثورة.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/e4yibkwpcwLhNalcBcxiTsm8fpp.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "طوفان",
+    "nameEnglish": "The Deluge",
+    "year": 2002,
+    "director": "عكاشة تويتة",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "فريدة صابونجي",
+      "عبد القادر جريو"
+    ],
+    "country": "الجزائر",
+    "filmingLocation": "قسنطينة",
+    "summary": "دراما اجتماعية تسلط الضوء على حياة أسرة خلال تسعينيات الجزائر الدموية.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/3YVSwVKyd86SUnepZN9FYqThyeL.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "نورمال!",
+    "nameEnglish": "Normal!",
+    "year": 2011,
+    "director": "مرزاق علواش",
+    "assistantDirector": "غير محدد",
+    "genre": "وثائقي",
+    "cast": [
+      "نسرين بلحاج",
+      "محمد تميم"
+    ],
+    "country": "الجزائر",
+    "filmingLocation": "الجزائر العاصمة",
+    "summary": "شباب جزائريون يصورون فيلمًا وثائقيًا بعد الربيع العربي، ويتحدثون عن القمع والإصلاح.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/aQWKFMkBhMNEavEtPtvDouqE9TT.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "السلّم",
+    "nameEnglish": "The Ladder",
+    "year": 2018,
+    "director": "محمد مخلوف",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "طارق بن خليفة",
+      "نجلاء القرقني"
+    ],
+    "country": "ليبيا",
+    "filmingLocation": "طرابلس",
+    "summary": "قصة رمزية عن الأمل والانبعاث في ظل الحرب والصراعات الأهلية.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/3PPu4NsbbAmOyX4Oi0XmZ9txJJA.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "زمن الرجوع",
+    "nameEnglish": "Time to Return",
+    "year": 2006,
+    "director": "مصطفى زرّوق",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "أحمد الزوي",
+      "فاطمة الشريف"
+    ],
+    "country": "ليبيا",
+    "filmingLocation": "بنغازي",
+    "summary": "شاب يعود من الغربة ليجد نفسه وسط مجتمع تغيّر بشكل جذري.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/1yqUrXgGOF3StwFc2d2buWe39vr.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "العلكة",
+    "nameEnglish": "The Gum",
+    "year": 2019,
+    "director": "وسام العشيبي",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "ليلى التومي",
+      "يوسف دريبيلة"
+    ],
+    "country": "ليبيا",
+    "filmingLocation": "مصراتة",
+    "summary": "قصة فتاة صغيرة تواجه قسوة المجتمع عبر عادة بسيطة كوسيلة هروب.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/10beLfxZ3aoXvX6L2pyttJsAzc8.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "البرج",
+    "nameEnglish": "The Tower",
+    "year": 2017,
+    "director": "فؤاد الزوي",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "عماد سالم",
+      "عبير السنوسي"
+    ],
+    "country": "ليبيا",
+    "filmingLocation": "طرابلس",
+    "summary": "تدور أحداثه حول انهيار رمزي لواقع الدولة وانعكاساته على عائلة بسيطة.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/i9GUSgddIqrroubiLsvvMRYyRy0.jpg"
+  },
+  {
+    "type": "film",
+    "nameArabic": "قبل النهاية",
+    "nameEnglish": "Before the End",
+    "year": 2015,
+    "director": "طارق التايب",
+    "assistantDirector": "غير محدد",
+    "genre": "دراما",
+    "cast": [
+      "هند التومي",
+      "عبد الله عقيلة"
+    ],
+    "country": "ليبيا",
+    "filmingLocation": "سبها",
+    "summary": "دراما إنسانية حول خيارات الحياة الأخيرة في ظل تدهور الأوضاع.",
+    "posterUrl": "https://image.tmdb.org/t/p/w780/x1ttqFIMCkE0pqdb5UwcehBxSfu.jpg"
+  }
+]

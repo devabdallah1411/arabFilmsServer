@@ -35,8 +35,8 @@ exports.createWorkWithImage = async (req, res, next) => {
       posterUrl = req.body.posterUrl;
     } else {
       // Neither image file nor posterUrl provided
-      return res.status(400).json({ 
-        message: 'Either image file or posterUrl must be provided' 
+      return res.status(400).json({
+        message: 'Either image file or posterUrl must be provided'
       });
     }
 
@@ -128,6 +128,52 @@ exports.deleteWork = async (req, res, next) => {
     const work = await Work.findByIdAndDelete(id);
     if (!work) return res.status(404).json({ message: 'Work not found' });
     res.status(204).send();
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Get all movies
+exports.getAllMovies = async (req, res, next) => {
+  try {
+    const movies = await Work.find({ type: 'film' }).sort({ createdAt: -1 });
+    res.json(movies);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Get all series
+exports.getAllSeries = async (req, res, next) => {
+  try {
+    const series = await Work.find({ type: 'series' }).sort({ createdAt: -1 });
+    res.json(series);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Get latest movies sorted by year (newest first)
+exports.getLatestMovies = async (req, res, next) => {
+  try {
+    const limit = req.query.limit ? parseInt(req.query.limit) : 20;
+    const movies = await Work.find({ type: 'film' })
+      .sort({ year: -1, createdAt: -1 })
+      .limit(limit);
+    res.json(movies);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Get latest series sorted by year (newest first)
+exports.getLatestSeries = async (req, res, next) => {
+  try {
+    const limit = req.query.limit ? parseInt(req.query.limit) : 20;
+    const series = await Work.find({ type: 'series' })
+      .sort({ year: -1, createdAt: -1 })
+      .limit(limit);
+    res.json(series);
   } catch (error) {
     next(error);
   }

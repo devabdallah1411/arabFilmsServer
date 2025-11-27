@@ -268,7 +268,7 @@
 
 📤 REQUEST BODY:
 {
-  "type": "film",                 // مطلوب: "film" أو "series"
+  "type": "series",                 // مطلوب: "film" أو "series"
   "nameArabic": "اسم العمل بالعربية",     // مطلوب
   "nameEnglish": "Work Name in English",  // مطلوب
   "year": 2024,                   // مطلوب: رقم بين 1800-3000
