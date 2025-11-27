@@ -156,7 +156,7 @@ exports.getAllSeries = async (req, res, next) => {
 // Get latest movies sorted by year (newest first)
 exports.getLatestMovies = async (req, res, next) => {
   try {
-    const limit = req.query.limit ? parseInt(req.query.limit) : 20;
+    const limit = req.query.limit ? parseInt(req.query.limit) : 10;
     const movies = await Work.find({ type: 'film' })
       .sort({ year: -1, createdAt: -1 })
       .limit(limit);
@@ -169,7 +169,7 @@ exports.getLatestMovies = async (req, res, next) => {
 // Get latest series sorted by year (newest first)
 exports.getLatestSeries = async (req, res, next) => {
   try {
-    const limit = req.query.limit ? parseInt(req.query.limit) : 20;
+    const limit = req.query.limit ? parseInt(req.query.limit) : 10;
     const series = await Work.find({ type: 'series' })
       .sort({ year: -1, createdAt: -1 })
       .limit(limit);
