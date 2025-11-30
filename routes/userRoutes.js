@@ -20,6 +20,9 @@ router.get('/', authenticate, requireRoles('admin'), userController.listUsers);
 router.delete('/:id', authenticate, requireRoles('admin'), userController.deleteUser);
 router.patch('/:id', authenticate, requireRoles('admin'), userController.updateUser);
 
+// User profile management
+router.patch('/profile', authenticate, userController.updateProfile);
+
 // Favorites management routes
 router.post('/favorites', authenticate, userController.addToFavorites);
 router.delete('/favorites/:workId', authenticate, userController.removeFromFavorites);

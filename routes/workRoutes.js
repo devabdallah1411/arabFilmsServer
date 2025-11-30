@@ -120,8 +120,16 @@ const handleMulterError = (error, req, res, next) => {
   next(error);
 };
 
-router.post('/', authenticate, requireRoles('admin', 'publisher'), createAndUpdateValidation, handleValidation, workController.createWork);
-router.post('/with-image', authenticate, requireRoles('admin', 'publisher'), upload.single('image'), handleMulterError, createAndUpdateValidation, handleValidation, workController.createWorkWithImage);
+// Unified work creation endpoint - supports file upload, base64, or URL
+router.post('/',
+  authenticate,
+  requireRoles('admin', 'publisher'),
+  upload.single('image'), // Optional - only processes if file is present
+  handleMulterError,
+  createAndUpdateValidation,
+  handleValidation,
+  workController.createWork
+);
 router.get('/', authenticate, requireRoles('admin', 'publisher'), workController.getAllWorks);
 // Public route for fetching all works (no authentication required)
 router.get('/public', workController.getAllWorksPublic);

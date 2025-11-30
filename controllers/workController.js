@@ -3,44 +3,7 @@ const { uploadToCloudinary } = require('../utils/cloudinary');
 
 exports.createWork = async (req, res, next) => {
   try {
-    // تنظيف مصفوفة cast قبل الإنشاء
-    if (Array.isArray(req.body.cast)) {
-      req.body.cast = req.body.cast.filter(actor => typeof actor === 'string' && actor.trim() !== '');
-    }
-    const workBody = { ...req.body };
-    if (req.user) {
-      workBody.createdBy = req.user.id;
-    }
-    const work = await Work.create(workBody);
-    res.status(201).json(work);
-  } catch (error) {
-    next(error);
-  }
-};
-
-exports.createWorkWithImage = async (req, res, next) => {
-  try {
-    let posterUrl = null;
-
-    // Check if image file is uploaded
-    if (req.file) {
-      // Upload image to Cloudinary
-      const result = await uploadToCloudinary(req.file.path, {
-        folder: 'arabfilm/posters',
-        resource_type: 'image',
-      });
-      posterUrl = result.secure_url;
-    } else if (req.body.posterUrl) {
-      // Use provided poster URL
-      posterUrl = req.body.posterUrl;
-    } else {
-      // Neither image file nor posterUrl provided
-      return res.status(400).json({
-        message: 'Either image file or posterUrl must be provided'
-      });
-    }
-
-    // Parse cast if it's a string
+    // Parse cast if it's a string (for multipart/form-data)
     let cast = req.body.cast;
     if (typeof cast === 'string') {
       try {
@@ -54,22 +17,47 @@ exports.createWorkWithImage = async (req, res, next) => {
       cast = cast.filter(actor => typeof actor === 'string' && actor.trim() !== '');
     }
 
-    // Create work with the poster URL
-    const workData = {
-      ...req.body,
-      cast: cast,
-      posterUrl: posterUrl,
-    };
+    const workBody = { ...req.body, cast };
     if (req.user) {
-      workData.createdBy = req.user.id;
+      workBody.createdBy = req.user.id;
     }
 
-    const work = await Work.create(workData);
+    // Handle poster - Priority 1: File upload (multipart)
+    if (req.file) {
+      try {
+        const uploadResult = await uploadToCloudinary(req.file.path, {
+          folder: 'arabfilm/posters',
+          resource_type: 'image'
+        });
+        workBody.posterImage = {
+          publicId: uploadResult.public_id,
+          url: uploadResult.secure_url
+        };
+      } catch (uploadErr) {
+        return res.status(400).json({ message: 'Failed to upload poster file', error: uploadErr.message });
+      }
+    }
+    // Priority 2: Base64/Data URI image
+    else if (req.body.posterImage && !req.body.posterUrl) {
+      try {
+        const uploadResult = await uploadToCloudinary(req.body.posterImage, { folder: 'arabfilm/posters' });
+        workBody.posterImage = {
+          publicId: uploadResult.public_id,
+          url: uploadResult.secure_url
+        };
+      } catch (uploadErr) {
+        return res.status(400).json({ message: 'Failed to upload poster image', error: uploadErr.message });
+      }
+    }
+    // Priority 3: posterUrl is already in workBody from req.body
+
+    const work = await Work.create(workBody);
     res.status(201).json(work);
   } catch (error) {
     next(error);
   }
 };
+
 
 exports.getAllWorks = async (req, res, next) => {
   try {

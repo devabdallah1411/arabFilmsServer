@@ -8,6 +8,9 @@ router.post('/', authenticate, requireRoles('user', 'admin', 'publisher'), ratin
 router.get('/average/:workId', ratingController.getAverageRating);
 router.get('/user/:workId', authenticate, requireRoles('user', 'admin', 'publisher'), ratingController.getUserRating);
 
+// Get all works rated by the current user (for user profile)
+router.get('/my-ratings', authenticate, requireRoles('user', 'admin', 'publisher'), ratingController.getUserRatedWorks);
+
 router.get('/admin', authenticate, requireRoles('admin'), ratingController.getAllRatings);
 router.get('/publisher', authenticate, requireRoles('publisher'), ratingController.getRatingsForPublisherWorks);
 

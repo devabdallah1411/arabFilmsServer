@@ -71,6 +71,10 @@ const workSchema = new mongoose.Schema(
       required: false,
       trim: true,
     },
+    posterImage: {
+      publicId: { type: String },
+      url: { type: String }
+    },
     seasonsCount: {
       type: Number,
       required: function () {

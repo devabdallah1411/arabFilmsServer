@@ -2,18 +2,42 @@ const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const sendEmail = require('../utils/sendEmail');
+const { uploadToCloudinary, deleteFromCloudinary } = require('../utils/cloudinary');
 
 
 exports.signup = async (req, res, next) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, profileImage } = req.body;
     const userExists = await User.findOne({ email });
     if (userExists) return res.status(400).json({ message: 'Email already in use' });
 
-    const user = new User({ username, email, password });
+    const userData = { username, email, password };
+
+    // Handle optional profile image upload
+    if (profileImage) {
+      try {
+        const uploadResult = await uploadToCloudinary(profileImage, { folder: 'arabfilm/profiles' });
+        userData.profileImage = {
+          publicId: uploadResult.public_id,
+          url: uploadResult.secure_url
+        };
+      } catch (uploadErr) {
+        return res.status(400).json({ message: 'Failed to upload profile image', error: uploadErr.message });
+      }
+    }
+
+    const user = new User(userData);
     await user.save();
 
-    res.status(201).json({ message: 'User registered successfully' });
+    res.status(201).json({
+      message: 'User registered successfully',
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        profileImage: user.profileImage
+      }
+    });
   } catch (err) {
     next(err);
   }
@@ -47,7 +71,7 @@ exports.signin = async (req, res, next) => {
     if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
 
     const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1d' });
-    res.json({ token, user: { id: user._id, username: user.username, email: user.email, role: user.role } });
+    res.json({ token, user: { id: user._id, username: user.username, email: user.email, role: user.role, profileImage: user.profileImage } });
   } catch (err) {
     next(err);
   }
@@ -166,9 +190,9 @@ exports.addToFavorites = async (req, res, next) => {
     user.favorites.push(workId);
     await user.save();
 
-    res.json({ 
+    res.json({
       message: 'Added to favorites successfully',
-      favorites: user.favorites 
+      favorites: user.favorites
     });
   } catch (err) {
     next(err);
@@ -189,9 +213,9 @@ exports.removeFromFavorites = async (req, res, next) => {
     user.favorites = user.favorites.filter(id => id.toString() !== workId);
     await user.save();
 
-    res.json({ 
+    res.json({
       message: 'Removed from favorites successfully',
-      favorites: user.favorites 
+      favorites: user.favorites
     });
   } catch (err) {
     next(err);
@@ -202,10 +226,10 @@ exports.getFavorites = async (req, res, next) => {
   try {
     const userId = req.user.id;
     const user = await User.findById(userId).populate('favorites');
-    
-    res.json({ 
+
+    res.json({
       favorites: user.favorites,
-      count: user.favorites.length 
+      count: user.favorites.length
     });
   } catch (err) {
     next(err);
@@ -220,9 +244,58 @@ exports.checkFavoriteStatus = async (req, res, next) => {
     const user = await User.findById(userId);
     const isFavorite = user.favorites.includes(workId);
 
-    res.json({ 
+    res.json({
       isFavorite,
-      workId 
+      workId
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Update user profile (authenticated user can update their own profile)
+exports.updateProfile = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const { username, email, profileImage } = req.body;
+
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    // Update basic fields if provided
+    if (username !== undefined) user.username = username;
+    if (email !== undefined) user.email = email;
+
+    // Handle profile image update
+    if (profileImage) {
+      try {
+        // Delete old image if exists
+        if (user.profileImage && user.profileImage.publicId) {
+          await deleteFromCloudinary(user.profileImage.publicId);
+        }
+
+        // Upload new image
+        const uploadResult = await uploadToCloudinary(profileImage, { folder: 'arabfilm/profiles' });
+        user.profileImage = {
+          publicId: uploadResult.public_id,
+          url: uploadResult.secure_url
+        };
+      } catch (uploadErr) {
+        return res.status(400).json({ message: 'Failed to upload profile image', error: uploadErr.message });
+      }
+    }
+
+    await user.save();
+
+    res.json({
+      message: 'Profile updated successfully',
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+        profileImage: user.profileImage
+      }
     });
   } catch (err) {
     next(err);
