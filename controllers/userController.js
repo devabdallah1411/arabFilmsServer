@@ -91,7 +91,7 @@ exports.forgotPassword = async (req, res, next) => {
     user.resetPasswordExpires = Date.now() + 60 * 60 * 1000; // 1 hour
     await user.save();
 
-    const resetUrl = `https://arabfilmsserver.onrender.com/api/users/reset-password/${resetToken}`;
+    const resetUrl = `https://api.arabfilmdb.com/api/users/reset-password/${resetToken}`;
     const message = `<p>You requested a password reset.</p><p>Click <a href="${resetUrl}">here</a> to reset your password. This link will expire in 1 hour.</p>`;
 
     await sendEmail(user.email, 'Password Reset', message);
