@@ -10,6 +10,7 @@ const commentRoutes = require('./routes/commentRoutes');
 const ratingRoutes = require('./routes/ratingRoutes');
 const siteReviewRoutes = require('./routes/siteReviewRoutes');
 const contactRoutes = require('./routes/contactRoutes');
+const advertisementRoutes = require('./routes/advertisementRoutes');
 const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
@@ -27,6 +28,7 @@ app.use('/api/comments', commentRoutes);
 app.use('/api/ratings', ratingRoutes);
 app.use('/api/site-reviews', siteReviewRoutes);
 app.use('/api/contact', contactRoutes);
+app.use('/api/advertisements', advertisementRoutes);
 
 app.use(errorHandler);
 
