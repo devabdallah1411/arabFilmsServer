@@ -7,22 +7,43 @@ const { uploadToCloudinary, deleteFromCloudinary } = require('../utils/cloudinar
 
 exports.signup = async (req, res, next) => {
   try {
-    const { username, email, password, profileImage } = req.body;
+    const { username, email, password, profileImageData } = req.body;
+
+    // Validate required fields
+    if (!username || !email || !password) {
+      return res.status(400).json({ message: 'Username, email, and password are required' });
+    }
+
     const userExists = await User.findOne({ email });
     if (userExists) return res.status(400).json({ message: 'Email already in use' });
 
     const userData = { username, email, password };
 
-    // Handle optional profile image upload
-    if (profileImage) {
+    // Handle profile image upload - Priority 1: File upload (multipart)
+    if (req.file) {
       try {
-        const uploadResult = await uploadToCloudinary(profileImage, { folder: 'arabfilm/profiles' });
+        const uploadResult = await uploadToCloudinary(req.file.path, {
+          folder: 'arabfilm/profiles',
+          resource_type: 'image'
+        });
         userData.profileImage = {
           publicId: uploadResult.public_id,
           url: uploadResult.secure_url
         };
       } catch (uploadErr) {
-        return res.status(400).json({ message: 'Failed to upload profile image', error: uploadErr.message });
+        return res.status(400).json({ message: 'Failed to upload profile image file', error: uploadErr.message });
+      }
+    }
+    // Priority 2: Base64/Data URI image
+    else if (profileImageData) {
+      try {
+        const uploadResult = await uploadToCloudinary(profileImageData, { folder: 'arabfilm/profiles' });
+        userData.profileImage = {
+          publicId: uploadResult.public_id,
+          url: uploadResult.secure_url
+        };
+      } catch (uploadErr) {
+        return res.status(400).json({ message: 'Failed to upload profile image data', error: uploadErr.message });
       }
     }
 
@@ -257,7 +278,7 @@ exports.checkFavoriteStatus = async (req, res, next) => {
 exports.updateProfile = async (req, res, next) => {
   try {
     const userId = req.user.id;
-    const { username, email, profileImage } = req.body;
+    const { username, email, profileImageData } = req.body;
 
     const user = await User.findById(userId);
     if (!user) return res.status(404).json({ message: 'User not found' });
@@ -266,8 +287,8 @@ exports.updateProfile = async (req, res, next) => {
     if (username !== undefined) user.username = username;
     if (email !== undefined) user.email = email;
 
-    // Handle profile image update
-    if (profileImage) {
+    // Handle profile image update - Priority 1: File upload (multipart)
+    if (req.file) {
       try {
         // Delete old image if exists
         if (user.profileImage && user.profileImage.publicId) {
@@ -275,13 +296,34 @@ exports.updateProfile = async (req, res, next) => {
         }
 
         // Upload new image
-        const uploadResult = await uploadToCloudinary(profileImage, { folder: 'arabfilm/profiles' });
+        const uploadResult = await uploadToCloudinary(req.file.path, {
+          folder: 'arabfilm/profiles',
+          resource_type: 'image'
+        });
         user.profileImage = {
           publicId: uploadResult.public_id,
           url: uploadResult.secure_url
         };
       } catch (uploadErr) {
-        return res.status(400).json({ message: 'Failed to upload profile image', error: uploadErr.message });
+        return res.status(400).json({ message: 'Failed to upload profile image file', error: uploadErr.message });
+      }
+    }
+    // Priority 2: Base64/Data URI image
+    else if (profileImageData) {
+      try {
+        // Delete old image if exists
+        if (user.profileImage && user.profileImage.publicId) {
+          await deleteFromCloudinary(user.profileImage.publicId);
+        }
+
+        // Upload new image
+        const uploadResult = await uploadToCloudinary(profileImageData, { folder: 'arabfilm/profiles' });
+        user.profileImage = {
+          publicId: uploadResult.public_id,
+          url: uploadResult.secure_url
+        };
+      } catch (uploadErr) {
+        return res.status(400).json({ message: 'Failed to upload profile image data', error: uploadErr.message });
       }
     }
 
