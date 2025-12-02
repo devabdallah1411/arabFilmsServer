@@ -24,16 +24,24 @@ const storage = multer.diskStorage({
 });
 
 // File filter to accept only images
+// More flexible: check extension first, then mimetype (if available)
 const fileFilter = (req, file, cb) => {
     const allowedTypes = /jpeg|jpg|png|gif|webp/;
     const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
-    const mimetype = allowedTypes.test(file.mimetype);
-
-    if (mimetype && extname) {
+    
+    // If extension is valid, accept the file (even if mimetype is wrong)
+    // This handles cases where Content-Type is incorrectly set in Postman
+    if (extname) {
         return cb(null, true);
-    } else {
-        cb(new Error('Only image files are allowed!'), false);
     }
+    
+    // Also check mimetype as a fallback
+    const mimetype = file.mimetype && allowedTypes.test(file.mimetype);
+    if (mimetype) {
+        return cb(null, true);
+    }
+    
+    cb(new Error('Only image files are allowed!'), false);
 };
 
 const upload = multer({
@@ -50,6 +58,9 @@ const handleMulterError = (error, req, res, next) => {
         if (error.code === 'LIMIT_FILE_SIZE') {
             return res.status(400).json({ message: 'File too large. Maximum size is 5MB.' });
         }
+        if (error.code === 'LIMIT_UNEXPECTED_FILE') {
+            return res.status(400).json({ message: 'Unexpected file field. Only profileImage is allowed.' });
+        }
     }
     if (error.message === 'Only image files are allowed!') {
         return res.status(400).json({ message: error.message });
@@ -58,7 +69,8 @@ const handleMulterError = (error, req, res, next) => {
 };
 
 // Signup with optional profile image
-router.post('/signup', upload.single('profileImage'), handleMulterError, userController.signup);
+// Using upload.any() to accept both text fields and file
+router.post('/signup', upload.any(), handleMulterError, userController.signup);
 router.post('/signin', userController.signin);
 
 // Forgot Password

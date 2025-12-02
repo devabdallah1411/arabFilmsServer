@@ -7,7 +7,7 @@ const { uploadToCloudinary, deleteFromCloudinary } = require('../utils/cloudinar
 
 exports.signup = async (req, res, next) => {
   try {
-    const { username, email, password, profileImageData } = req.body;
+    const { username, email, password } = req.body;
 
     // Validate required fields
     if (!username || !email || !password) {
@@ -19,31 +19,23 @@ exports.signup = async (req, res, next) => {
 
     const userData = { username, email, password };
 
-    // Handle profile image upload - Priority 1: File upload (multipart)
-    if (req.file) {
-      try {
-        const uploadResult = await uploadToCloudinary(req.file.path, {
-          folder: 'arabfilm/profiles',
-          resource_type: 'image'
-        });
-        userData.profileImage = {
-          publicId: uploadResult.public_id,
-          url: uploadResult.secure_url
-        };
-      } catch (uploadErr) {
-        return res.status(400).json({ message: 'Failed to upload profile image file', error: uploadErr.message });
-      }
-    }
-    // Priority 2: Base64/Data URI image
-    else if (profileImageData) {
-      try {
-        const uploadResult = await uploadToCloudinary(profileImageData, { folder: 'arabfilm/profiles' });
-        userData.profileImage = {
-          publicId: uploadResult.public_id,
-          url: uploadResult.secure_url
-        };
-      } catch (uploadErr) {
-        return res.status(400).json({ message: 'Failed to upload profile image data', error: uploadErr.message });
+    // Handle profile image upload (form data only)
+    // Find profileImage file from req.files array
+    if (req.files && req.files.length > 0) {
+      const profileImageFile = req.files.find(file => file.fieldname === 'profileImage');
+      if (profileImageFile) {
+        try {
+          const uploadResult = await uploadToCloudinary(profileImageFile.path, {
+            folder: 'arabfilm/profiles',
+            resource_type: 'image'
+          });
+          userData.profileImage = {
+            publicId: uploadResult.public_id,
+            url: uploadResult.secure_url
+          };
+        } catch (uploadErr) {
+          return res.status(400).json({ message: 'Failed to upload profile image file', error: uploadErr.message });
+        }
       }
     }
 
