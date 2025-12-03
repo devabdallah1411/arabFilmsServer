@@ -28,19 +28,19 @@ const storage = multer.diskStorage({
 const fileFilter = (req, file, cb) => {
     const allowedTypes = /jpeg|jpg|png|gif|webp/;
     const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
-    
+
     // If extension is valid, accept the file (even if mimetype is wrong)
     // This handles cases where Content-Type is incorrectly set in Postman
     if (extname) {
         return cb(null, true);
     }
-    
+
     // Also check mimetype as a fallback
     const mimetype = file.mimetype && allowedTypes.test(file.mimetype);
     if (mimetype) {
         return cb(null, true);
     }
-    
+
     cb(new Error('Only image files are allowed!'), false);
 };
 
@@ -82,13 +82,13 @@ router.post('/reset-password/:token', userController.resetPassword);
 // Admin create users with roles
 router.post('/', authenticate, requireRoles('admin'), userController.createUserByAdmin);
 
+// User profile management with optional profile image
+router.patch('/profile', authenticate, upload.single('profileImage'), handleMulterError, userController.updateProfile);
+
 // Admin user management
 router.get('/', authenticate, requireRoles('admin'), userController.listUsers);
 router.delete('/:id', authenticate, requireRoles('admin'), userController.deleteUser);
 router.patch('/:id', authenticate, requireRoles('admin'), userController.updateUser);
-
-// User profile management with optional profile image
-router.patch('/profile', authenticate, upload.single('profileImage'), handleMulterError, userController.updateProfile);
 
 // Favorites management routes
 router.post('/favorites', authenticate, userController.addToFavorites);
