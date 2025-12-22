@@ -73,6 +73,23 @@ const createAndUpdateValidation = [
       return Array.isArray(value) && value.length > 0;
     })
     .withMessage('cast must be a non-empty array'),
+  body('platforms')
+    .optional()
+    .custom((value) => {
+      // Accept either JSON string or array
+      let arr = value;
+      if (typeof value === 'string') {
+        try {
+          arr = JSON.parse(value);
+        } catch (e) {
+          return false;
+        }
+      }
+      if (!Array.isArray(arr)) return false;
+      // each item should be object with name and url
+      return arr.every((p) => p && typeof p.name === 'string' && p.name.trim().length > 0 && typeof p.url === 'string' && p.url.trim().length > 0);
+    })
+    .withMessage('platforms must be an array of {name, url}'),
   body('country').trim().notEmpty().withMessage('country is required'),
   body('filmingLocation').trim().notEmpty().withMessage('filmingLocation is required'),
   body('summary').trim().notEmpty().withMessage('summary is required'),

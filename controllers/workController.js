@@ -3,7 +3,7 @@ const { uploadToCloudinary } = require('../utils/cloudinary');
 
 exports.createWork = async (req, res, next) => {
   try {
-    // Parse cast if it's a string (for multipart/form-data)
+    // Parse cast (support JSON stringified array or array of objects/strings)
     let cast = req.body.cast;
     if (typeof cast === 'string') {
       try {
@@ -12,10 +12,17 @@ exports.createWork = async (req, res, next) => {
         return res.status(400).json({ message: 'Invalid cast format' });
       }
     }
-    // تنظيف مصفوفة cast
-    if (Array.isArray(cast)) {
-      cast = cast.filter(actor => typeof actor === 'string' && actor.trim() !== '');
+    if (!Array.isArray(cast)) {
+      return res.status(400).json({ message: 'cast must be an array' });
     }
+    // Normalize cast items: allow either string name or object { name, image }
+    cast = cast
+      .map((actor) => {
+        if (typeof actor === 'string') return { name: actor.trim() };
+        if (actor && typeof actor === 'object' && actor.name) return { name: String(actor.name).trim(), image: actor.image || undefined };
+        return null;
+      })
+      .filter(a => a && a.name && a.name.length > 0);
 
     const workBody = { ...req.body, cast };
     if (req.user) {
@@ -50,6 +57,41 @@ exports.createWork = async (req, res, next) => {
       }
     }
     // Priority 3: posterUrl is already in workBody from req.body
+
+    // Parse platforms if provided (could be JSON string)
+    if (workBody.platforms && typeof workBody.platforms === 'string') {
+      try {
+        workBody.platforms = JSON.parse(workBody.platforms);
+      } catch (e) {
+        return res.status(400).json({ message: 'Invalid platforms format' });
+      }
+    }
+
+    // Normalize platforms (ensure array of {name, url})
+    if (workBody.platforms) {
+      if (!Array.isArray(workBody.platforms)) {
+        return res.status(400).json({ message: 'platforms must be an array' });
+      }
+      workBody.platforms = workBody.platforms
+        .map(p => (p && typeof p === 'object' && p.name && p.url) ? { name: String(p.name).toLowerCase(), url: String(p.url).trim() } : null)
+        .filter(p => p && p.name && p.url);
+    }
+
+    // Normalize directorImage if provided as string (JSON or URL)
+    if (workBody.directorImage && typeof workBody.directorImage === 'string') {
+      try {
+        const parsed = JSON.parse(workBody.directorImage);
+        if (parsed && (parsed.url || parsed.secure_url)) {
+          workBody.directorImage = { publicId: parsed.public_id || parsed.publicId, url: parsed.url || parsed.secure_url || parsed.secureUrl };
+        }
+      } catch (e) {
+        // not JSON -> treat as URL
+        const urlStr = String(workBody.directorImage).trim();
+        if (urlStr.length > 0) {
+          workBody.directorImage = { url: urlStr };
+        }
+      }
+    }
 
     const work = await Work.create(workBody);
     res.status(201).json(work);
@@ -98,6 +140,46 @@ exports.updateWork = async (req, res, next) => {
     const { id } = req.params;
     // Prevent ownership changes via update
     const update = { ...req.body };
+    // If cast is provided as string (from multipart/form-data), parse and normalize
+    if (update.cast && typeof update.cast === 'string') {
+      try {
+        let parsed = JSON.parse(update.cast);
+        if (!Array.isArray(parsed)) return res.status(400).json({ message: 'cast must be an array' });
+        parsed = parsed
+          .map((actor) => {
+            if (typeof actor === 'string') return { name: actor.trim() };
+            if (actor && typeof actor === 'object' && actor.name) return { name: String(actor.name).trim(), image: actor.image || undefined };
+            return null;
+          })
+          .filter(a => a && a.name && a.name.length > 0);
+        update.cast = parsed;
+      } catch (e) {
+        return res.status(400).json({ message: 'Invalid cast format' });
+      }
+    }
+    // If platforms provided as string, parse and normalize
+    if (update.platforms && typeof update.platforms === 'string') {
+      try {
+        let parsed = JSON.parse(update.platforms);
+        if (!Array.isArray(parsed)) return res.status(400).json({ message: 'platforms must be an array' });
+        parsed = parsed.map(p => (p && typeof p === 'object' && p.name && p.url) ? { name: String(p.name).toLowerCase(), url: String(p.url).trim() } : null).filter(p => p && p.name && p.url);
+        update.platforms = parsed;
+      } catch (e) {
+        return res.status(400).json({ message: 'Invalid platforms format' });
+      }
+    }
+    // Normalize directorImage if string
+    if (update.directorImage && typeof update.directorImage === 'string') {
+      try {
+        const parsed = JSON.parse(update.directorImage);
+        if (parsed && (parsed.url || parsed.secure_url)) {
+          update.directorImage = { publicId: parsed.public_id || parsed.publicId, url: parsed.url || parsed.secure_url || parsed.secureUrl };
+        }
+      } catch (e) {
+        const urlStr = String(update.directorImage).trim();
+        if (urlStr.length > 0) update.directorImage = { url: urlStr };
+      }
+    }
     delete update.createdBy;
     const work = await Work.findByIdAndUpdate(id, update, {
       new: true,

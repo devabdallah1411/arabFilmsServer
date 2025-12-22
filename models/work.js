@@ -31,6 +31,10 @@ const workSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    directorImage: {
+      publicId: { type: String },
+      url: { type: String }
+    },
     assistantDirector: {
       type: String,
       required: true,
@@ -42,13 +46,21 @@ const workSchema = new mongoose.Schema(
       trim: true,
     },
     cast: {
-      type: [String],
+      type: [
+        new mongoose.Schema({
+          name: { type: String, required: true, trim: true },
+          image: {
+            publicId: { type: String },
+            url: { type: String }
+          }
+        }, { _id: false })
+      ],
       required: true,
       validate: {
         validator: function (value) {
-          return Array.isArray(value) && value.length > 0 && value.every((v) => typeof v === 'string' && v.trim().length > 0);
+          return Array.isArray(value) && value.length > 0 && value.every((v) => v && typeof v.name === 'string' && v.name.trim().length > 0);
         },
-        message: 'cast must be a non-empty array of strings',
+        message: 'cast must be a non-empty array of objects with a name',
       },
     },
     country: {
@@ -74,6 +86,15 @@ const workSchema = new mongoose.Schema(
     posterImage: {
       publicId: { type: String },
       url: { type: String }
+    },
+    platforms: {
+      type: [
+        new mongoose.Schema({
+          name: { type: String, enum: ['netflix', 'shahid', 'youtube', 'ocn'], required: true },
+          url: { type: String, required: true, trim: true },
+        }, { _id: false })
+      ],
+      required: false,
     },
     seasonsCount: {
       type: Number,
