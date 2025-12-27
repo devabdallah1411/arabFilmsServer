@@ -40,6 +40,10 @@ const workSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    assistantDirectorImage: {
+      publicId: { type: String },
+      url: { type: String }
+    },
     genre: {
       type: String,
       required: true,

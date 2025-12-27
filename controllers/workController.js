@@ -92,6 +92,21 @@ exports.createWork = async (req, res, next) => {
         }
       }
     }
+    // Normalize assistantDirectorImage if provided as string (JSON or URL)
+    if (workBody.assistantDirectorImage && typeof workBody.assistantDirectorImage === 'string') {
+      try {
+        const parsed = JSON.parse(workBody.assistantDirectorImage);
+        if (parsed && (parsed.url || parsed.secure_url)) {
+          workBody.assistantDirectorImage = { publicId: parsed.public_id || parsed.publicId, url: parsed.url || parsed.secure_url || parsed.secureUrl };
+        }
+      } catch (e) {
+        // not JSON -> treat as URL
+        const urlStr = String(workBody.assistantDirectorImage).trim();
+        if (urlStr.length > 0) {
+          workBody.assistantDirectorImage = { url: urlStr };
+        }
+      }
+    }
 
     const work = await Work.create(workBody);
     res.status(201).json(work);
@@ -178,6 +193,18 @@ exports.updateWork = async (req, res, next) => {
       } catch (e) {
         const urlStr = String(update.directorImage).trim();
         if (urlStr.length > 0) update.directorImage = { url: urlStr };
+      }
+    }
+    // Normalize assistantDirectorImage if string
+    if (update.assistantDirectorImage && typeof update.assistantDirectorImage === 'string') {
+      try {
+        const parsed = JSON.parse(update.assistantDirectorImage);
+        if (parsed && (parsed.url || parsed.secure_url)) {
+          update.assistantDirectorImage = { publicId: parsed.public_id || parsed.publicId, url: parsed.url || parsed.secure_url || parsed.secureUrl };
+        }
+      } catch (e) {
+        const urlStr = String(update.assistantDirectorImage).trim();
+        if (urlStr.length > 0) update.assistantDirectorImage = { url: urlStr };
       }
     }
     delete update.createdBy;
