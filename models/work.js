@@ -94,7 +94,7 @@ const workSchema = new mongoose.Schema(
     platforms: {
       type: [
         new mongoose.Schema({
-          name: { type: String, enum: ['netflix', 'shahid', 'youtube', 'ocn'], required: true },
+          name: { type: String, enum: ['netflix', 'shahid', 'youtube', 'ocn', 'stctv'], required: true },
           url: { type: String, required: true, trim: true },
         }, { _id: false })
       ],
