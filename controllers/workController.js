@@ -155,6 +155,37 @@ exports.updateWork = async (req, res, next) => {
     const { id } = req.params;
     // Prevent ownership changes via update
     const update = { ...req.body };
+    
+    // Handle poster - Priority 1: File upload (multipart)
+    if (req.file) {
+      try {
+        const uploadResult = await uploadToCloudinary(req.file.path, {
+          folder: 'arabfilm/posters',
+          resource_type: 'image'
+        });
+        update.posterImage = {
+          publicId: uploadResult.public_id,
+          url: uploadResult.secure_url
+        };
+      } catch (uploadErr) {
+        return res.status(400).json({ message: 'Failed to upload poster file', error: uploadErr.message });
+      }
+    }
+    
+    // Convert string numbers to actual numbers (from FormData)
+    if (update.year && typeof update.year === 'string') {
+      const yearNum = parseInt(update.year, 10);
+      if (!isNaN(yearNum)) update.year = yearNum;
+    }
+    if (update.seasonsCount && typeof update.seasonsCount === 'string') {
+      const seasonsNum = parseInt(update.seasonsCount, 10);
+      if (!isNaN(seasonsNum)) update.seasonsCount = seasonsNum;
+    }
+    if (update.episodesCount && typeof update.episodesCount === 'string') {
+      const episodesNum = parseInt(update.episodesCount, 10);
+      if (!isNaN(episodesNum)) update.episodesCount = episodesNum;
+    }
+    
     // If cast is provided as string (from multipart/form-data), parse and normalize
     if (update.cast && typeof update.cast === 'string') {
       try {
@@ -207,6 +238,14 @@ exports.updateWork = async (req, res, next) => {
         if (urlStr.length > 0) update.assistantDirectorImage = { url: urlStr };
       }
     }
+    
+    // Remove empty string fields to avoid validation errors (only keep if they have actual values)
+    Object.keys(update).forEach(key => {
+      if (update[key] === '' && key !== 'posterUrl') {
+        delete update[key];
+      }
+    });
+    
     delete update.createdBy;
     const work = await Work.findByIdAndUpdate(id, update, {
       new: true,

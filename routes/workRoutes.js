@@ -55,7 +55,16 @@ const createAndUpdateValidation = [
     .withMessage('type must be either film or series'),
   body('nameArabic').trim().notEmpty().withMessage('nameArabic is required'),
   body('nameEnglish').trim().notEmpty().withMessage('nameEnglish is required'),
-  body('year').isInt({ min: 1800, max: 3000 }).withMessage('year must be a valid number'),
+  body('year')
+    .customSanitizer((value) => {
+      if (typeof value === 'string') {
+        const num = parseInt(value, 10);
+        return isNaN(num) ? value : num;
+      }
+      return value;
+    })
+    .isInt({ min: 1800, max: 3000 })
+    .withMessage('year must be a valid number between 1800 and 3000'),
   body('director').trim().notEmpty().withMessage('director is required'),
   body('assistantDirector').trim().notEmpty().withMessage('assistantDirector is required'),
   body('genre').trim().notEmpty().withMessage('genre is required'),
@@ -99,12 +108,26 @@ const createAndUpdateValidation = [
     .isURL()
     .withMessage('posterUrl must be a valid URL if provided'),
   body('seasonsCount')
+    .customSanitizer((value) => {
+      if (typeof value === 'string') {
+        const num = parseInt(value, 10);
+        return isNaN(num) ? value : num;
+      }
+      return value;
+    })
     .if(body('type').equals('series'))
     .exists({ checkNull: true })
     .withMessage('seasonsCount is required for series')
     .isInt({ min: 1 })
     .withMessage('seasonsCount must be a positive integer'),
   body('episodesCount')
+    .customSanitizer((value) => {
+      if (typeof value === 'string') {
+        const num = parseInt(value, 10);
+        return isNaN(num) ? value : num;
+      }
+      return value;
+    })
     .if(body('type').equals('series'))
     .exists({ checkNull: true })
     .withMessage('episodesCount is required for series')
@@ -162,7 +185,7 @@ router.get('/series/latest', workController.getLatestSeries);
 router.get('/series', workController.getAllSeries);
 
 router.get('/:id', authenticate, requireRoles('admin', 'publisher'), idParamValidation, handleValidation, workController.getWorkById);
-router.patch('/:id', authenticate, requireRoles('admin', 'publisher'), requireWorkOwnerOrAdmin, [...idParamValidation, ...createAndUpdateValidation], handleValidation, workController.updateWork);
+router.patch('/:id', authenticate, requireRoles('admin', 'publisher'), requireWorkOwnerOrAdmin, upload.single('image'), handleMulterError, [...idParamValidation, ...createAndUpdateValidation], handleValidation, workController.updateWork);
 router.delete('/:id', authenticate, requireRoles('admin', 'publisher'), requireWorkOwnerOrAdmin, idParamValidation, handleValidation, workController.deleteWork);
 
 module.exports = router;
