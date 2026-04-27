@@ -40,6 +40,8 @@ exports.createWork = async (req, res, next) => {
           publicId: uploadResult.public_id,
           url: uploadResult.secure_url
         };
+        // Also set posterUrl so frontend can display it
+        workBody.posterUrl = uploadResult.secure_url;
       } catch (uploadErr) {
         return res.status(400).json({ message: 'Failed to upload poster file', error: uploadErr.message });
       }
@@ -52,6 +54,8 @@ exports.createWork = async (req, res, next) => {
           publicId: uploadResult.public_id,
           url: uploadResult.secure_url
         };
+        // Also set posterUrl so frontend can display it
+        workBody.posterUrl = uploadResult.secure_url;
       } catch (uploadErr) {
         return res.status(400).json({ message: 'Failed to upload poster image', error: uploadErr.message });
       }
